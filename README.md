@@ -1,4 +1,4 @@
-![FIRE ENGINE — Failure Investigation & Root Explanation](docs/assets/cover.jpg)
+![FIRE ENGINE — Failure Investigation & Root Explanation](assets/cover.jpg)
 
 AI-assisted incident response that reasons over **payload shape** (never raw field
 values) and the **process path** a request walked — which services, spans, and
