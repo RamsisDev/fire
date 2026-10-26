@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "FIRE ENGINE — Failure Investigation & Root Explanation"
 readme = "README.md"
 authors = [{ name = "Ramsis Peñaloza" }]
+license = "LicenseRef-PolyForm-Small-Business-1.0.0"
+license-files = ["LICENSE.md"]
 requires-python = ">=3.13,<3.15"
 dependencies = [
     "pydantic>=2.7",

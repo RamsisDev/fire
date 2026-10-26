@@ -146,3 +146,10 @@ There is no fail-open mode.
 
 Nothing particular to a real watched system is committed here: no system YAML of a real
 system, and no recordings or fixtures taken from one.
+
+## License
+
+[PolyForm Small Business 1.0.0](LICENSE.md). Free to use, change, and share for individuals,
+non-commercial use, and companies with fewer than 100 people and under 1M USD (2019) in yearly
+revenue. Larger companies need a commercial license: contact
+[@RamsisDev](https://github.com/RamsisDev).
