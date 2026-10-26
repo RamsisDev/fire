@@ -10,7 +10,7 @@ from fire.core.domain.dossier import Dossier
 
 @runtime_checkable
 class Reasoner(Protocol):
-    """System One: the echo stub today, a System One reasoner adapter over HTTP next. Happy
+    """System One: the echo stub offline, or Laya over HTTP (`POST /v1/systemone`). Happy
     path is not a generative LLM.
     """
 

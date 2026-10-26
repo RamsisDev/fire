@@ -1,4 +1,4 @@
-.PHONY: install fmt lint test run
+.PHONY: install fmt lint test run retrain-export retrain-train
 
 install:
 	uv sync --group dev
@@ -15,3 +15,9 @@ test:
 
 run:
 	uv run python -m fire.apps.incident_engine
+
+retrain-export:
+	uv run python -m fire.apps.retrain export
+
+retrain-train:
+	uv run python -m fire.apps.retrain train

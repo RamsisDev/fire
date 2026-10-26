@@ -1,1 +1,1 @@
-"""Reasoner adapters (echo stub; a System One reasoner adapter over HTTP later)."""
+"""Reasoner adapters: the echo stub and Laya over Jev's `POST /v1/systemone`."""

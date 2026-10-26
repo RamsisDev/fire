@@ -1,4 +1,6 @@
-"""Composition root — provider selection from config (v0: echo/template, console or slack)."""
+"""Composition root: provider selection from config (reasoner echo or laya, template
+narrator, console or slack notifier, memory or sqlite catalog and feedback store).
+"""
 
 from __future__ import annotations
 
@@ -13,17 +15,22 @@ from pathlib import Path
 import httpx
 
 from fire.adapters.manifests.event_chains_graph import EventChainsGraphParser
+from fire.adapters.memory.decision_store import MemoryDecisionStore
 from fire.adapters.memory.observation_catalog import MemoryObservationCatalog
 from fire.adapters.narrators.template import TemplateNarrator
 from fire.adapters.notifiers.console import ConsoleNotifier
 from fire.adapters.notifiers.slack import SlackNotifier
 from fire.adapters.reasoners.echo import EchoReasoner
+from fire.adapters.reasoners.laya import LayaReasoner
 from fire.adapters.shapes.sha256 import Sha256ShapeFingerprinter
+from fire.adapters.sqlite.decision_store import SqliteDecisionStore
 from fire.adapters.sqlite.observation_catalog import SqliteObservationCatalog
 from fire.apps.config import (
     CatalogConfig,
+    FeedbackConfig,
     FireConfig,
     NotifierConfig,
+    ReasonerConfig,
     SystemConfig,
     load_fire_config,
     load_system_configs,
@@ -37,14 +44,17 @@ from fire.core.domain.http_errors import HttpErrorBurst
 from fire.core.domain.incident import Incident
 from fire.core.domain.observation import ShapeObservation
 from fire.core.domain.path import PathDrift, PathDriftRule
+from fire.core.ports.decision_store import DecisionStore
 from fire.core.ports.manifest_parser import ManifestParser
 from fire.core.ports.notifier import Notifier
 from fire.core.ports.observation_catalog import ObservationCatalog
+from fire.core.ports.reasoner import Reasoner
 from fire.core.ports.shape_fingerprinter import ShapeFingerprinter
 from fire.core.services.coverage import CoverageScope
 from fire.core.services.diagnosis import DiagnosisService
 from fire.core.services.dlq import DlqService
 from fire.core.services.drift_incident import DriftIncidentService
+from fire.core.services.feedback import FeedbackService
 from fire.core.services.http_errors import HttpErrorsService
 from fire.core.services.incident_correlator import Correlation, IncidentCorrelator
 from fire.core.services.incident_io import IncidentIoReceipt, IncidentIoService
@@ -63,6 +73,9 @@ def _utc_now() -> datetime:
 class Container:
     config: FireConfig
     diagnosis: DiagnosisService
+    feedback: FeedbackService
+    decisions: DecisionStore
+    reasoner: Reasoner
     fingerprinter: ShapeFingerprinter
     catalog: ObservationCatalog
     ingest: IngestService
@@ -210,6 +223,39 @@ def build_catalog(
     )
 
 
+def build_decision_store(config: FeedbackConfig) -> DecisionStore:
+    """The `feedback.provider` of `config/fire.yml`; `sqlite` needs `feedback.path_env` set."""
+    if config.provider == "memory":
+        return MemoryDecisionStore()
+    path = os.environ.get(config.path_env)
+    if not path:
+        raise ValueError(f"feedback provider sqlite needs {config.path_env} set to a file path")
+    return SqliteDecisionStore(path)
+
+
+def build_reasoner(
+    config: ReasonerConfig, transport: httpx.AsyncBaseTransport | None = None
+) -> Reasoner:
+    """The reasoner `config.provider` names. `laya` asks a laya-serve `/v1/systemone` and fails
+    here, at startup, when its URL env var is unset.
+    """
+    if config.provider == "echo":
+        return EchoReasoner()
+    if config.provider == "laya":
+        url = os.environ.get(config.base_url_env)
+        if not url:
+            raise ValueError(f"reasoner provider 'laya' needs {config.base_url_env} set")
+        return LayaReasoner(
+            url,
+            api_key=os.environ.get(config.api_key_env) or None,
+            model=config.model,
+            timeout_s=config.timeout_s,
+            min_sufficient=config.min_sufficient,
+            transport=transport,
+        )
+    raise ValueError(f"reasoner provider {config.provider!r} not wired (use echo or laya)")
+
+
 def build_notifier(
     config: NotifierConfig,
     systems: Mapping[str, SystemConfig],
@@ -238,11 +284,6 @@ def build_container(
     config_path = config_path or DEFAULT_CONFIG
     config = load_fire_config(config_path)
 
-    if config.reasoner.provider != "echo":
-        raise ValueError(
-            f"reasoner provider {config.reasoner.provider!r} not wired in v0 "
-            "(use echo; a System One adapter comes next)"
-        )
     if config.narrator.provider != "template":
         raise ValueError(
             f"narrator provider {config.narrator.provider!r} not wired in v0 "
@@ -253,10 +294,16 @@ def build_container(
     parsers = manifest_parsers()
     check_manifest_kinds(systems, parsers)
 
+    reasoner = build_reasoner(config.reasoner)
+    decisions = build_decision_store(config.feedback)
+    feedback = FeedbackService(decisions, clock=clock)
     diagnosis = DiagnosisService(
-        reasoner=EchoReasoner(),
+        reasoner=reasoner,
         narrator=TemplateNarrator(),
         notifier=build_notifier(config.notifier, systems),
+        feedback=feedback,
+        provider=config.reasoner.provider,
+        model=config.reasoner.model,
     )
     fingerprinter = Sha256ShapeFingerprinter()
     drift_policies = {name: system.drift for name, system in systems.items()}
@@ -293,6 +340,9 @@ def build_container(
     return Container(
         config=config,
         diagnosis=diagnosis,
+        feedback=feedback,
+        decisions=decisions,
+        reasoner=reasoner,
         fingerprinter=fingerprinter,
         catalog=catalog,
         ingest=IngestService(catalog, fingerprinter, sources),

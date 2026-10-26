@@ -81,6 +81,13 @@ possibilities in under 30 seconds.
   - `noul` is the privacy gate when evidence is insufficient or unsafe to score.
 - Cascade: System One first → low confidence → human and/or optional generative LLM
   escalation. Generative LLM is **not** the default reasoner.
+- Providers: `echo` (offline default) or `laya`, which asks a
+  Laya server over Jev's wire protocol
+  (`POST /v1/systemone`, `FIRE_SYSTEMONE_BASE_URL`). If Laya is unreachable or answers
+  garbage, the decision falls back to echo with `noul` set.
+- Feedback: every decision is stored. A reviewer confirms the top possibility, corrects it
+  with another one, or rejects all of them; the verdict is queued as `pending` retraining
+  data, and `python -m fire.apps.retrain` turns it into Laya training rows.
 
 ### Narrator contract (non-negotiable)
 
@@ -93,10 +100,9 @@ The reasoner **decides**; the **Narrator** only writes readable prose for Slack.
 
 ## Current state
 
-v0 runs end to end with stubs behind the ports: the `echo` reasoner and a local template
-narrator. Next: a System One reasoner adapter over HTTP (`FIRE_SYSTEMONE_BASE_URL`), an
-OpenAI-compatible Narrator (`FIRE_NARRATOR_*`; keys never live in the repo), and the
-feedback loop.
+v0 runs end to end: the `echo` or `laya` reasoner, a local template narrator, and a feedback
+store (`memory` or `sqlite`) for decisions and human verdicts. Next: an OpenAI-compatible
+Narrator (`FIRE_NARRATOR_*`; keys never live in the repo).
 
 ## Development
 
@@ -136,11 +142,80 @@ There is no fail-open mode.
 | `GET` | `/health` | Liveness |
 | `POST` | `/v0/diagnose` | Submit a `manual` incident; `422` if the client fingerprint of a `shape` differs from the recomputed one |
 | `POST` | `/v0/observations` | Ingest shape and span observations; returns accepted / duplicate / rejected counts |
+| `GET` | `/v0/incidents/{id}/decision` | The stored decision with its reasoner, model, and latest feedback; `404` if unknown |
+| `POST` | `/v0/incidents/{id}/feedback` | `{verdict: confirmed\|corrected\|rejected, possibility_id?, reviewer, note?}`; `201` with a `pending` row, `404` unknown incident, `422` if the verdict does not fit the decision |
+| `GET` | `/v0/feedback` | Feedback rows (`status`, `system`, `limit`) and counts per status |
 | `GET` | `/v0/systems/{system}/streams` | Baselines, counts, and open shape drift per stream key |
 | `GET` | `/v0/systems/{system}/paths` | Open flows, counters, and one learned path per entry operation |
 | `GET` | `/v0/systems/{system}/coverage` | Manifest events and OpenAPI routes never observed |
 | `GET` | `/v0/systems/{system}/dlq` | Abandoned work units joined to their fingerprints |
 | `POST` | `/v0/webhooks/incident-io` | incident.io webhooks, verified by signature; `503` while the secret is unset |
+
+## Feedback and retraining
+
+FIRE stores every decision, takes a reviewer's verdict on it, and turns the queued verdicts
+into training data for [Laya](https://github.com/NandhaKishorM/laya), the System One. To run
+Laya, set `reasoner.provider: laya` and `FIRE_SYSTEMONE_BASE_URL` to the full URL of
+laya-serve's `POST /v1/systemone` (Jev's wire protocol). `echo` stays the default. Endpoints
+are in [HTTP API](#http-api).
+
+Decisions are kept in `feedback.provider`: `memory` (lost on restart) or `sqlite`. Retraining
+needs `sqlite` and `FIRE_FEEDBACK_PATH`.
+
+### Verdicts
+
+A reviewer posts a verdict on an incident:
+
+```bash
+curl -X POST http://localhost:8000/v0/incidents/INC-123/feedback \
+  -H "X-FIRE-Token: $FIRE_API_TOKEN" -H "Content-Type: application/json" \
+  -d '{"verdict": "corrected", "possibility_id": "<possibility_id>", "reviewer": "alice"}'
+```
+
+`confirmed` names the top possibility (omit `possibility_id`), `corrected` names another
+possibility of the decision, and `rejected` names none. Each verdict is queued as `pending`.
+A newer verdict on the same incident discards the older pending one, so only the latest
+counts. Laya trains on:
+
+| Verdict | Laya trains on (`expected`) |
+|---------|-----------------------------|
+| `confirmed` | `{"cause": <top possibility>, "sufficient": true}` |
+| `corrected` | `{"cause": <named possibility>, "sufficient": true}` |
+| `rejected` | `{"sufficient": false}` |
+
+Verdicts whose decision record is gone, or whose cause is not among the request's options,
+are skipped.
+
+Each verdict moves from `pending` to `exported` (written into a batch) to `trained`. A
+superseded verdict is `discarded`. `python -m fire.apps.retrain status` prints the counts.
+
+### Retraining
+
+```bash
+make retrain-export                                   # pending verdicts -> a new batch
+FIRE_LAYA_BASE_CHECKPOINT=<checkpoint> make retrain-train
+```
+
+`make retrain-export` (`python -m fire.apps.retrain export`, optionally `--system`) writes
+`train.jsonl` and `manifest.json` to a `batch-<timestamp>` folder under `FIRE_LAYA_RETRAIN_DIR`
+(default `var/retrain`). `train` (`python -m fire.apps.retrain train`, optionally `--batch`
+and `--dry-run`) runs `laya-train` on the latest exported batch, starting from
+`FIRE_LAYA_BASE_CHECKPOINT` for `retraining.epochs` epochs. It refuses a batch with fewer
+rows than `retraining.min_feedback` (20). `--dry-run` marks nothing. If the trainer fails,
+the verdicts stay `exported`.
+
+Laya is an external tool, not a FIRE dependency: `pip install laya`, or point
+`retraining.train_command` elsewhere. To serve the new checkpoint:
+
+```bash
+LAYA_EXTRA_MODELS='{"fire": "<checkpoint>"}' laya-serve
+```
+
+then set `reasoner.model: fire` in `config/fire.yml`. The trainer's output path is printed
+after a successful `train`.
+
+Training rows contain the shape-only dossier, the same `state` and `questions` sent to Laya
+at serving time, never payload values.
 
 ## Contributing
 

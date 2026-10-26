@@ -16,7 +16,7 @@ from collections.abc import Iterable
 from contextlib import asynccontextmanager, suppress
 from typing import Any
 
-from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Request
+from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Query, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
@@ -45,6 +45,7 @@ from fire.core.domain.dossier import (
     ShapeFingerprint,
 )
 from fire.core.domain.drift import DriftSignal
+from fire.core.domain.feedback import InvalidFeedback, TrainingStatus, UnknownIncident, Verdict
 from fire.core.domain.incident import Incident, Trigger
 from fire.core.domain.observation import ShapeObservation, SpanObservation
 from fire.core.domain.origin import Origin
@@ -81,6 +82,10 @@ async def lifespan(_app: FastAPI):
         with suppress(asyncio.CancelledError):
             await completing
         _container.catalog.close()
+        _container.decisions.close()
+        aclose = getattr(_container.reasoner, "aclose", None)
+        if aclose is not None:
+            await aclose()
         _container = None
 
 
@@ -113,6 +118,17 @@ class DiagnoseRequest(BaseModel):
     shape: Shape | None = None
     fingerprint: ShapeFingerprint | None = None
     process_hops: list[ProcessHop] = Field(default_factory=list)
+
+
+class FeedbackRequest(BaseModel):
+    """Body of `POST /v0/incidents/{incident_id}/feedback`."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    verdict: Verdict
+    possibility_id: str | None = None
+    reviewer: str
+    note: str | None = None
 
 
 def _require_token(x_fire_token: str | None, token_env: str) -> None:
@@ -462,6 +478,75 @@ async def diagnose(
         "system": body.system,
         "service": body.service,
         "origin_id": origin.origin_id if origin else None,
+    }
+
+
+@app.get("/v0/incidents/{incident_id}/decision")
+async def get_decision(
+    incident_id: str,
+    x_fire_token: str | None = Header(default=None, alias="X-FIRE-Token"),
+) -> dict[str, Any]:
+    container = get_container()
+    _require_token(x_fire_token, container.config.api.token_env)
+    record = container.decisions.get_decision(incident_id)
+    if record is None:
+        raise HTTPException(status_code=404, detail="unknown incident")
+    rows = container.decisions.list_feedback(incident_id=incident_id)
+    # The dossier stays in the store: it is what the retraining export reads.
+    return {
+        "incident_id": record.incident_id,
+        "system": record.system,
+        "reasoner": record.reasoner,
+        "model": record.model,
+        "decided_at": record.decided_at.isoformat(),
+        "decision": record.decision.model_dump(mode="json"),
+        "feedback": rows[-1].model_dump(mode="json") if rows else None,
+    }
+
+
+@app.post("/v0/incidents/{incident_id}/feedback", status_code=201)
+async def submit_feedback(
+    incident_id: str,
+    request: Request,
+    x_fire_token: str | None = Header(default=None, alias="X-FIRE-Token"),
+) -> dict[str, Any]:
+    container = get_container()
+    _require_token(x_fire_token, container.config.api.token_env)
+    # Parsed here: the token is checked before the body.
+    try:
+        body = FeedbackRequest.model_validate_json(await request.body())
+    except ValidationError as error:
+        raise RequestValidationError(
+            [
+                {"loc": ("body", *detail["loc"]), "type": detail["type"]}
+                for detail in error.errors(include_input=False, include_context=False)
+            ]
+        ) from None
+    try:
+        feedback = container.feedback.submit(
+            incident_id, body.verdict, body.possibility_id, body.reviewer, body.note
+        )
+    except UnknownIncident:
+        raise HTTPException(status_code=404, detail="unknown incident") from None
+    except InvalidFeedback as error:
+        raise HTTPException(status_code=422, detail=str(error)) from None
+    return feedback.model_dump(mode="json")
+
+
+@app.get("/v0/feedback")
+async def list_feedback(
+    status: TrainingStatus | None = None,
+    system: str | None = None,
+    limit: int | None = Query(default=None, ge=1),
+    x_fire_token: str | None = Header(default=None, alias="X-FIRE-Token"),
+) -> dict[str, Any]:
+    container = get_container()
+    _require_token(x_fire_token, container.config.api.token_env)
+    items = container.decisions.list_feedback(status, system, limit)
+    everything = container.decisions.list_feedback(system=system)
+    return {
+        "items": [row.model_dump(mode="json") for row in items],
+        "counts": {s.value: sum(row.status is s for row in everything) for s in TrainingStatus},
     }
 
 

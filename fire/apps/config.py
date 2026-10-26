@@ -36,10 +36,18 @@ class ApiConfig(BaseModel):
     token_env: str = "FIRE_API_TOKEN"
 
 
-class ReasonerConfig(BaseModel):
+class ReasonerConfig(_Strict):
     provider: str = "echo"
-    base_url_env: str | None = None
-    api_key_env: str | None = None
+    # Read by the `laya` provider only: System One over Jev's `POST /v1/systemone`.
+    # Holds the full URL of that endpoint; unset fails startup.
+    base_url_env: str = Field(default="FIRE_SYSTEMONE_BASE_URL", min_length=1)
+    # Holds an optional bearer token (LAYA_API_KEY on the server).
+    api_key_env: str = Field(default="FIRE_SYSTEMONE_API_KEY", min_length=1)
+    # Checkpoint name, such as a LAYA_EXTRA_MODELS name; unset, the server's default.
+    model: str | None = None
+    timeout_s: float = Field(default=10, gt=0)
+    # A `sufficient` answer below this makes the decision noul.
+    min_sufficient: float = Field(default=0.5, ge=0, le=1)
 
 
 class NarratorConfig(BaseModel):
@@ -91,6 +99,27 @@ class CatalogConfig(_Strict):
     retention_s: float = Field(default=604800, gt=0, allow_inf_nan=False)
 
 
+class FeedbackConfig(_Strict):
+    """Where the body keeps decisions and the human verdicts on them, queued for retraining."""
+
+    provider: Literal["memory", "sqlite"] = "memory"
+    # Holds the SQLite file's path; read only by the `sqlite` provider.
+    path_env: str = Field(default="FIRE_FEEDBACK_PATH", min_length=1)
+
+
+class RetrainingConfig(_Strict):
+    """`python -m fire.apps.retrain`: exports pending feedback and runs the trainer."""
+
+    # Holds the checkpoint `train_command` starts from.
+    base_checkpoint_env: str = Field(default="FIRE_LAYA_BASE_CHECKPOINT", min_length=1)
+    # Holds the directory for batches and checkpoints; unset, var/retrain.
+    output_dir_env: str = Field(default="FIRE_LAYA_RETRAIN_DIR", min_length=1)
+    # `train` refuses below this many pending rows.
+    min_feedback: int = Field(default=20, ge=1)
+    train_command: str = Field(default="laya-train", min_length=1)
+    epochs: int = Field(default=8, ge=1)
+
+
 class IncidentIoWebhookConfig(_Strict):
     """`POST /v0/webhooks/incident-io`. Contract:
     docs/specs/ingest-drift-and-feedback.md#incidentio-webhook.
@@ -115,6 +144,8 @@ class FireConfig(BaseModel):
     tentacle: TentacleConfig = Field(default_factory=TentacleConfig)
     catalog: CatalogConfig = Field(default_factory=CatalogConfig)
     webhooks: WebhooksConfig = Field(default_factory=WebhooksConfig)
+    feedback: FeedbackConfig = Field(default_factory=FeedbackConfig)
+    retraining: RetrainingConfig = Field(default_factory=RetrainingConfig)
 
 
 def load_fire_config(path: Path) -> FireConfig:

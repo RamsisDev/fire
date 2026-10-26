@@ -3,9 +3,12 @@ api:
   token_env: FIRE_API_TOKEN
 
 reasoner:
-  provider: echo  # echo; a System One reasoner adapter over HTTP comes next
-  # base_url_env: FIRE_SYSTEMONE_BASE_URL
-  # api_key_env: FIRE_SYSTEMONE_API_KEY
+  provider: echo                         # echo | laya (System One over Jev's POST /v1/systemone)
+  base_url_env: FIRE_SYSTEMONE_BASE_URL  # laya: env var holding the full URL; unset fails startup
+  api_key_env: FIRE_SYSTEMONE_API_KEY    # laya: env var holding an optional bearer token
+  model: null                            # laya: checkpoint name, e.g. a LAYA_EXTRA_MODELS name
+  timeout_s: 10                          # laya: per request; a failure falls back to echo, noul
+  min_sufficient: 0.5                    # laya: a sufficient answer below this makes it noul
 
 narrator:
   provider: template  # template | openai_compat
@@ -46,3 +49,17 @@ webhooks:
   incident_io:                 # POST /v0/webhooks/incident-io
     signing_secret_env: FIRE_INCIDENT_IO_SIGNING_SECRET  # env var holding the whsec_ secret
     tolerance_s: 300           # largest gap between webhook-timestamp and the body's clock
+
+# Decisions and the human verdicts on them (POST /v0/incidents/{id}/feedback), queued as
+# pending retraining.
+feedback:
+  provider: memory              # memory | sqlite; memory loses everything on restart
+  path_env: FIRE_FEEDBACK_PATH  # sqlite: env var holding the database file's path
+
+# python -m fire.apps.retrain: exports pending feedback and runs the trainer on it.
+retraining:
+  base_checkpoint_env: FIRE_LAYA_BASE_CHECKPOINT  # current weights laya-train starts from
+  output_dir_env: FIRE_LAYA_RETRAIN_DIR           # batches and checkpoints; default var/retrain
+  min_feedback: 20                                # train refuses below this many pending rows
+  train_command: laya-train
+  epochs: 8
