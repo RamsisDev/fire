@@ -1,0 +1,83 @@
+{
+  "PK": {
+    "S": "ORDER#fixture-order-001"
+  },
+  "SK": {
+    "S": "EVENT#wu-fixture-fulfillment-allocated-001"
+  },
+  "entity_type": {
+    "S": "EVENT"
+  },
+  "event_type": {
+    "S": "fulfillment.allocated"
+  },
+  "source_entity_type": {
+    "S": "ORDER"
+  },
+  "origin_region": {
+    "S": "us-east-1"
+  },
+  "correlation_id": {
+    "S": "corr-fixture-fulfillment-allocated-001"
+  },
+  "target_domains": {
+    "L": [
+      {
+        "S": "fulfillment"
+      }
+    ]
+  },
+  "triggered_by": {
+    "S": "fixture:sample"
+  },
+  "payload_type": {
+    "S": "FixturePayload"
+  },
+  "payload": {
+    "M": {
+      "order_id": {
+        "S": "fixture-order-001"
+      },
+      "allocated_items": {
+        "L": [
+          {
+            "M": {
+              "item_id": {
+                "S": "fixture-item-1"
+              },
+              "fulfillment_request_id": {
+                "S": "fixture-fulfillment-request-001"
+              },
+              "warehouse_code": {
+                "S": "WH01"
+              },
+              "ship_set_id": {
+                "S": "fixture-order-001"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "fence": {
+    "M": {
+      "ORDER#fixture-order-001": {
+        "M": {
+          "ORDER#fixture-order-001": {
+            "N": "1"
+          }
+        }
+      }
+    }
+  },
+  "created_at": {
+    "S": "2026-01-15T09:00:00+00:00"
+  },
+  "expires_at": {
+    "N": "1771059600"
+  },
+  "writer_traceparent": {
+    "S": "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01"
+  }
+}

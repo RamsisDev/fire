@@ -1,0 +1,54 @@
+{
+  "eventId": "fixture-stock-2",
+  "eventName": "update:stock_level",
+  "data": {
+    "stock_level_id": 1,
+    "created": "2026-01-01T00:00:00",
+    "updated": "2026-01-01T00:00:00",
+    "deleted": null,
+    "sku_id": 1,
+    "warehouse_id": 1,
+    "reorder_policy_id": 1,
+    "available_on": "2026-01-01",
+    "discontinued_on": "2026-01-01",
+    "attributes": {
+      "region_code": null,
+      "country_code": null,
+      "supplier": {
+        "supplier_id": null,
+        "supplier_name": "fixture",
+        "supplier_phone": "fixture",
+        "postal_code": null,
+        "country": null,
+        "addresses": null
+      },
+      "image_blob_id": null,
+      "image_data": null,
+      "bundle_attributes": {
+        "outer": {
+          "length_cm": 1,
+          "width_cm": 1.5,
+          "height_cm": 1,
+          "weight_kg": 1.5
+        },
+        "components": null
+      },
+      "package_attributes": null
+    },
+    "on_hand": 1,
+    "reserved": 1,
+    "backorderable": true,
+    "parent_stock_level_id": 1,
+    "count_method": null,
+    "last_counted_by": "fixture",
+    "notes": "fixture",
+    "id": 1,
+    "type": "fixture",
+    "location": {
+      "aisle": "fixture",
+      "bin": "fixture",
+      "zone": "fixture"
+    }
+  },
+  "ts": 1768474800123
+}

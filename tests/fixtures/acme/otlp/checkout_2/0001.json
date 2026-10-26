@@ -1,0 +1,358 @@
+{
+ "resourceSpans": [
+  {
+   "resource": {
+    "attributes": [
+     {
+      "key": "service.name",
+      "value": {
+       "stringValue": "acme-api"
+      }
+     },
+     {
+      "key": "service.version",
+      "value": {
+       "stringValue": "redacted"
+      }
+     },
+     {
+      "key": "service.environment",
+      "value": {
+       "stringValue": "redacted"
+      }
+     }
+    ]
+   },
+   "scopeSpans": [
+    {
+     "scope": {
+      "name": "opentelemetry.instrumentation.fastapi",
+      "version": "0.66b0"
+     },
+     "spans": [
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "4fa268ba6300b2bc",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "POST /v1/orders/checkout http receive",
+       "kind": 1,
+       "startTimeUnixNano": "1768474800000182668",
+       "endTimeUnixNano": "1768474800000194668",
+       "attributes": [
+        {
+         "key": "asgi.event.type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        }
+       ],
+       "status": {}
+      }
+     ],
+     "schemaUrl": "https://opentelemetry.io/schemas/1.11.0"
+    },
+    {
+     "scope": {
+      "name": "opentelemetry.instrumentation.botocore.dynamodb",
+      "version": "0.66b0"
+     },
+     "spans": [
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "0722bc7a6f90f9ea",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "DynamoDB.PutItem",
+       "kind": 3,
+       "startTimeUnixNano": "1768474800002502102",
+       "endTimeUnixNano": "1768474800026077444",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "DynamoDB"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "PutItem"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "localhost"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "9000"
+         }
+        },
+        {
+         "key": "db.system",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "db.operation",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "aws.dynamodb.table_names",
+         "value": {
+          "arrayValue": {
+           "values": [
+            {
+             "stringValue": "acme-dev-orders"
+            }
+           ]
+          }
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "cb84159c5d540fdd",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "DynamoDB.BatchGetItem",
+       "kind": 3,
+       "startTimeUnixNano": "1768474800026304654",
+       "endTimeUnixNano": "1768474800412514687",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "DynamoDB"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "BatchGetItem"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "dynamodb.us-east-1.amazonaws.com"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "443"
+         }
+        },
+        {
+         "key": "db.system",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "db.operation",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "aws.dynamodb.table_names",
+         "value": {
+          "arrayValue": {
+           "values": [
+            {
+             "stringValue": "acme-catalog-products"
+            }
+           ]
+          }
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "6027b3d371d36183",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "DynamoDB.GetItem",
+       "kind": 3,
+       "startTimeUnixNano": "1768474800413795696",
+       "endTimeUnixNano": "1768474800518888643",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "DynamoDB"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "GetItem"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "dynamodb.us-east-1.amazonaws.com"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "443"
+         }
+        },
+        {
+         "key": "db.system",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "db.operation",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "aws.dynamodb.table_names",
+         "value": {
+          "arrayValue": {
+           "values": [
+            {
+             "stringValue": "acme-catalog-products"
+            }
+           ]
+          }
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      }
+     ],
+     "schemaUrl": "https://opentelemetry.io/schemas/1.11.0"
+    }
+   ]
+  }
+ ]
+}

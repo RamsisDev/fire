@@ -1,0 +1,60 @@
+{
+  "event_type": "public_incident.follow_up_created_v2",
+  "public_incident.follow_up_created_v2": {
+    "assignee": {
+      "email": "fixture-email@example.com",
+      "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "name": "fixture-name",
+      "role": "fixture-role",
+      "slack_user_id": "U02AYNF2XJM"
+    },
+    "assignee_team": {
+      "id": "abc123",
+      "name": "fixture-name"
+    },
+    "completed_at": "2021-08-17T13:28:57.801578Z",
+    "created_at": "2021-08-17T13:28:57.801578Z",
+    "creator": {
+      "alert": {
+        "id": "01GW2G3V0S59R238FAHPDS1R66",
+        "title": "fixture-title"
+      },
+      "api_key": {
+        "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "name": "fixture-name"
+      },
+      "user": {
+        "email": "fixture-email@example.com",
+        "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "name": "fixture-name",
+        "role": "fixture-role",
+        "slack_user_id": "U02AYNF2XJM"
+      },
+      "workflow": {
+        "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "name": "fixture-name"
+      }
+    },
+    "description": "fixture-description",
+    "external_issue_reference": {
+      "issue_name": "fixture-issue_name",
+      "issue_permalink": "https://example.com/fixture-issue_permalink",
+      "provider": "asana"
+    },
+    "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+    "incident_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+    "labels": [
+      "fixture-labels",
+      "fixture-labels"
+    ],
+    "priority": {
+      "description": "fixture-description",
+      "id": "01GNW4BAQ7XRMFF6FHKNXDFPRW",
+      "name": "fixture-name",
+      "rank": 10
+    },
+    "status": "outstanding",
+    "title": "fixture-title",
+    "updated_at": "2021-08-17T13:28:57.801578Z"
+  }
+}

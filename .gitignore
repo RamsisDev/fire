@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Env / secrets
+.env
+.env.*
+.env.json
+!.env.example
+!.env.json.example
+
+# Local catalog files (FIRE_CATALOG_PATH)
+var/
+*.sqlite3
+*.sqlite3-*
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Terraform local
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Docs / AI tooling (local only)
+docs/
+.cursor/
+.agents/
+.archify/
+skills-lock.json

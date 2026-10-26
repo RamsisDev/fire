@@ -1,0 +1,121 @@
+{
+  "adminId": 1001,
+  "adminName": "fixture-admin-name",
+  "checkoutId": "fixture-checkout-id",
+  "customer": {
+    "email": "fixture.customer@example.com",
+    "firstName": "fixture-first-name",
+    "id": "fixture-customer-id",
+    "lastName": "fixture-last-name",
+    "origin": "storefront",
+    "telephone": "",
+    "wantsMarketingEmails": true,
+    "wantsMarketingSms": true,
+    "wantsTransactionalEmails": true,
+    "wantsTransactionalSms": true
+  },
+  "items": [
+    {
+      "amounts": {
+        "adjustmentAmount": 0,
+        "amount": 4200,
+        "discountAmount": 0,
+        "currency": "USD",
+        "giftCardAmount": 0,
+        "postTaxAdjustmentAmount": 0,
+        "preTaxAdjustmentAmount": 0,
+        "promotionAmount": 0,
+        "subtotal": 4200,
+        "tax": 420,
+        "total": 4620
+      },
+      "configuration": {
+        "currency": "USD",
+        "basePrice": "42",
+        "id": "1001",
+        "options": [
+          {
+            "optionGroupId": "SIZE",
+            "optionId": "MEDIUM",
+            "description": "fixture-option-description",
+            "price": "0"
+          },
+          {
+            "optionGroupId": "COLOR",
+            "optionId": "BLUE",
+            "description": "fixture-option-description",
+            "price": "0"
+          }
+        ],
+        "variantId": "2001",
+        "modelVersion": "fixture-model-version",
+        "price": "42"
+      },
+      "variant": {
+        "colorVariantId": "fixture-color-variant-id",
+        "fit": {
+          "method": "standard"
+        }
+      },
+      "id": "fixture-item-id",
+      "productId": "3001",
+      "productName": "fixture-product-name",
+      "quantity": 1,
+      "requestId": "fixture-request-id",
+      "type": "Physical"
+    }
+  ],
+  "locale": "US",
+  "origin": "web",
+  "partyId": 1,
+  "payments": [
+    {
+      "amount": 4620,
+      "ccExpiresMonth": "fixture-cc-expires-month",
+      "ccExpiresYear": "fixture-cc-expires-year",
+      "ccId": "fixture-cc-id",
+      "ccLastFour": "fixture-cc-last-four",
+      "ccType": "fixture-card-brand",
+      "currency": "USD",
+      "entryType": "stored_card",
+      "id": "00000000-0000-4000-8000-000000000001",
+      "type": "card"
+    }
+  ],
+  "referenceOrderId": "fixture-reference-order-id",
+  "referenceSystem": "storefront",
+  "shippingAddress": {
+    "countryCode": "US",
+    "extendedAddress": "fixture-extended-address",
+    "firstName": "fixture-first-name",
+    "id": 2002,
+    "lastName": "fixture-last-name",
+    "locality": "fixture-locality",
+    "postalCode": "fixture-postal-code",
+    "region": "NY",
+    "residential": true,
+    "streetAddress": "fixture-street-address"
+  },
+  "shippingMethod": {
+    "method": "standard",
+    "productId": ""
+  },
+  "timezone": "",
+  "totals": {
+    "adjustmentsTotal": 0,
+    "cashDueTotal": 0,
+    "cashTotal": 0,
+    "creditMemoTotal": 0,
+    "currency": "USD",
+    "discountTotal": 0,
+    "giftCardTotal": 0,
+    "postTaxAdjustmentTotal": 0,
+    "promotionsTotal": 0,
+    "shippingTotal": 0,
+    "subTotal": 4200,
+    "taxTotal": 420,
+    "totalAmount": 4620
+  },
+  "userId": "fixture-user-id",
+  "userIdType": "account_id"
+}

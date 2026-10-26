@@ -1,0 +1,22 @@
+{
+  "work_unit_id": "wu-fixture-order-charged-001",
+  "source": "dynamodb",
+  "domain": "order",
+  "event_type": "order.charged",
+  "payload": {
+    "order_id": "fixture-order-001"
+  },
+  "metadata": {
+    "timestamp": "2026-01-15T09:00:00+00:00",
+    "correlation_id": "corr-fixture-order-charged-001",
+    "priority": "normal",
+    "region": "us-east-1",
+    "routing": {
+      "business_event_type": "order.charged",
+      "target_domains": [
+        "order"
+      ],
+      "triggered_by": "fixture:sample"
+    }
+  }
+}

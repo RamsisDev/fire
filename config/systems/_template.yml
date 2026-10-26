@@ -1,0 +1,253 @@
+# Template for a watched system, not a real one: the loader skips files starting with `_`.
+# Copy it to config/systems/<system>.yml, set `system` to the file name, and keep the keys and
+# sources the system has. `acme` (Acme Shop) and the ACME_* env vars are placeholders.
+# This file holds what a person decides: where to look and which rules apply. What the system
+# contains (events, processors, ingress) is discovered from its manifest, never listed here.
+# Every env var a real system file names goes in .env.example.
+# Contract: docs/specs/system-config-and-discovery.md
+system: acme                         # a slug; must equal the file name
+display_name: Acme Shop
+
+notify:
+  slack:
+    channel_id: C0123456789          # required; public C…, private G…; survives renames
+    channel_name: "#acme-incidents"  # optional, display only
+
+# Where the system describes itself. Omit `manifest` for observation-only mode: the engine still
+# starts, and coverage reports the inventory as missing.
+discovery:
+  manifest:
+    kind: event_chains_graph         # parser for the manifest format
+    path_env: ACME_MANIFEST_PATH     # env var holding the manifest file path
+
+# Where the tentacle reads. Kinds: otlp, http_proxy, kinesis, dynamodb_stream, sns_fanout,
+# s3_capture, replay. `id` is the `source` of every observation read from it, unique within the
+# system. Event kinds also declare a `direction` (internal: the system's own events; inbound:
+# from outside) and an `envelope` of dotted paths into each record
+# (docs/specs/tentacle.md#envelope). Paths, resource names, upstreams, and listen addresses go
+# through env vars. Contract: docs/specs/tentacle.md#sources-in-the-system-yaml.
+sources:
+  # Spans from the system's OpenTelemetry collector, given one more `otlphttp` exporter to this
+  # address. Contract: docs/specs/http-and-span-capture.md#otlp-receiver.
+  - id: acme-traces
+    kind: otlp
+    listen_env: ACME_OTLP_LISTEN     # env var holding host:port, such as 127.0.0.1:4318
+    # Optional: the span event a client adds when it writes a capture pair, naming the pair's
+    # object keys, so `acme-captures` below joins each pair to its span. Contract:
+    # docs/specs/http-and-span-capture.md#capture-events.
+    capture_event:
+      name: capture.written
+      request_uri: acme.capture.request_uri
+      response_uri: acme.capture.response_uri
+      ttl_s: 900                     # seconds a key stays joinable to its span
+
+  # Inbound HTTP: clients call the proxy port instead of the service's. Route templates come
+  # from each upstream's OpenAPI document. The body reads a copy of that document at startup
+  # for coverage: the routes never called. Contract:
+  # docs/specs/http-and-span-capture.md#inbound-proxy and
+  # docs/specs/ingest-drift-and-feedback.md#coverage-and-contract.
+  - id: acme-api
+    kind: http_proxy
+    listen_port: 8180                # avoid 8021 on macOS, where launchd can hold it
+    listen_host: 127.0.0.1
+    upstream_env: ACME_API_UPSTREAM  # env var holding the base URL, such as http://localhost:8080
+    openapi_path: /openapi.json      # where the proxy fetches the upstream's route templates
+    openapi_refresh_s: 300
+    max_body_bytes: 1048576          # larger bodies are forwarded but not shaped
+    openapi_file_env: ACME_API_OPENAPI_PATH  # optional; env var holding the document copy's path
+  - {id: acme-pricing, kind: http_proxy, listen_port: 8190, upstream_env: ACME_PRICING_UPSTREAM,
+     openapi_file_env: ACME_PRICING_OPENAPI_PATH}
+
+  # The system's domain events, each record's data decoded as JSON. When a publisher writes to
+  # every region, one event_id read from several regions counts once.
+  # Contract: docs/specs/tentacle.md#kinds.
+  - id: domain-events
+    kind: kinesis
+    direction: internal
+    stream_env: ACME_EVENTS_STREAM   # env var holding the stream name, the same per region
+    regions: [us-east-1, us-west-2]  # read in parallel
+    poll_s: 1                        # seconds between passes over the shards
+    envelope:
+      event_id: id                   # one event read from several regions counts once
+      event_type: eventType          # the channel name
+      occurred_at: occurredAt        # ISO 8601, or {path: ts, epoch: ms}
+      work_id: workUnitId            # optional; joins events, captures, and outcomes
+      payload: payload               # the value generalized into a shape
+
+  # Each item an events table writes: the new image from its stream. Values with a known prefix
+  # drop it, here a sort key EVENT#<work unit id>.
+  - id: domain-event-items
+    kind: dynamodb_stream
+    direction: internal
+    table_env: ACME_EVENTS_TABLE     # env var holding the table name, the same per region
+    regions: [us-east-1, us-west-2]
+    poll_s: 1
+    envelope:
+      event_id: {path: SK, strip_prefix: "EVENT#"}
+      event_type: event_type
+      occurred_at: created_at
+      work_id: {path: SK, strip_prefix: "EVENT#"}
+      payload: payload
+
+  # Abandoned work units, not events: the rows a dead-letter processor writes when it gives up
+  # on one. `outcome: abandoned` marks each record's work_id abandoned, and `filter` drops every
+  # other status in the tentacle, so one work unit is one outcome, named after the processor
+  # that abandoned it. `triggers.dlq` needs such a source.
+  # Contract: docs/specs/ingest-drift-and-feedback.md#dlq-attribution.
+  - id: task-outcomes
+    kind: dynamodb_stream
+    direction: internal
+    outcome: abandoned
+    table_env: ACME_OUTBOX_TABLE
+    regions: [us-east-1, us-west-2]
+    filter: {attribute: status, equals: ABANDONED}  # optional; other images count as filtered
+    envelope:
+      event_id: work_unit_id         # one outcome per work unit
+      event_type: processor_name     # the outcome channel's name
+      occurred_at: {path: timestamp, epoch: ms}
+      work_id: work_unit_id          # required with outcome
+      payload: error_details
+
+  # Events another system publishes to this one.
+  - id: inventory-updates
+    kind: kinesis
+    direction: inbound
+    stream_env: ACME_INVENTORY_UPDATES_STREAM
+    regions: [us-east-1]
+    envelope: {event_id: eventId, event_type: eventName, occurred_at: {path: ts, epoch: ms},
+               payload: data}
+
+  # SNS topics, read from FIRE's own queue fire-<system>-<id> (here fire-acme-shipment-events),
+  # subscribed to the topic. FIRE never creates the queue or its subscription. MessageId is the
+  # publish's, so a message published to two regions counts twice.
+  - id: shipment-events
+    kind: sns_fanout
+    direction: inbound
+    topic_env: ACME_SHIPMENT_EVENTS_TOPIC  # env var holding the topic name; standard topics only
+    regions: [us-east-1]
+    raw_delivery: false              # true when the subscription delivers the message alone
+    wait_s: 5                        # long polling: seconds a receive waits for a message
+    visibility_s: 300                # seconds a received message stays hidden; at least 30
+    poll_s: 1                        # seconds to wait after a receive that got nothing
+    envelope:
+      event_id: MessageId            # each publish gets its own
+      event_type: Message.event_type  # `Message` is decoded when it is JSON
+      occurred_at: Message.occurred_at
+      payload: Message
+  - id: payment-events
+    kind: sns_fanout
+    direction: inbound
+    topic_env: ACME_PAYMENT_EVENTS_TOPIC
+    regions: [us-east-1]
+    envelope: {event_id: MessageId, event_type: Message.event_type,
+               occurred_at: Message.published_at, payload: Message}
+
+  # Request and response pairs the system's outbound clients write to a bucket, under
+  # {prefix}{requests,responses}/{work}/. Each client's layout says where its keys put the
+  # action; an entity id segment is a value and is never read. A client that writes no action
+  # in its key or its metadata counts its pairs as missing_action. Contract:
+  # docs/specs/tentacle.md#kinds.
+  - id: acme-captures
+    kind: s3_capture
+    bucket_env: ACME_CAPTURE_BUCKET  # env var holding the bucket name
+    poll_s: 5                        # seconds between listings
+    settle_s: 10                     # a response is read once this old, so both halves landed
+    max_object_bytes: 1048576
+    # Optional; a work segment that does not match in full, such as an `unattributed`
+    # directory, gives no work_id. Here a ULID.
+    work_id_pattern: "[0-7][0-9A-HJKMNP-TV-Z]{25}"
+    captures:                        # per client: key prefix, channel label, key layout
+      # {action}_{ts}.json: the action from the key.
+      - {prefix: notification-payloads/, label: notifications, layout: work_unit_action}
+      # {entity_id}_{action}_{ts}.json: the action from object metadata `action`.
+      - {prefix: shipping-payloads/, label: shipping, layout: work_unit_entity_action}
+      # {entity_id}_{ts}.json: the action from object metadata `action`.
+      - {prefix: billing-payloads/, label: billing, layout: work_unit_entity}
+
+  # JSON files read once: a .json file (an object or a list), a .jsonl file, or a directory of
+  # them, such as the system's work unit samples (*_work_unit.json). Other files in a directory
+  # count as missing_event_id when their envelope paths are absent.
+  - id: work-unit-samples
+    kind: replay
+    direction: internal
+    path_env: ACME_REPLAY_PATH
+    envelope: {event_id: work_unit_id, event_type: event_type,
+               occurred_at: metadata.timestamp, work_id: work_unit_id, payload: payload}
+
+# How outbound HTTP calls are named. A host not listed keeps its name, and each path segment
+# that looks like an id becomes {id}. A listed host takes its alias, and a path matching none
+# of its templates becomes {alias}/{unlisted}. Contract:
+# docs/specs/http-and-span-capture.md#operation-names
+operations:
+  http:
+    - hosts: ["*.billing.example.com"]  # exact names, or "*." plus a suffix
+      alias: billing                    # replaces the host and its port in operation names
+      paths:
+        - /api/{version}/invoices
+        - /api/{version}/invoices/{invoice_id}
+    - hosts: [shipping.example.com]
+      alias: shipping
+      paths:
+        - /v2/shipments/{shipment_id}/labels
+
+# Exceptions only, never full lists. Each name must be declared by the manifest or observed, or
+# the coverage audit flags it.
+policy:
+  critical: []                       # events whose drift always matters, such as order.placed
+  ignore: []                         # known noise, left out of coverage gaps
+
+# Shape fingerprint sampling (no raw values stored), in (0, 1]. DLQ attribution joins abandoned
+# work units to the observations that carried them, so a system with `triggers.dlq` keeps 1.0.
+fingerprinting:
+  sample_rate: 1.0
+
+# Baselines and shape drift: docs/specs/ingest-drift-and-feedback.md#baseline. Until
+# min_samples observations fold, a stream is `baseline rebuilding` and raises no drift. Paths
+# read the same thresholds: a path is warm after min_samples folded flows, and a hop every flow
+# reached is required.
+drift:
+  min_samples: 20                    # observations folded before a stream is warm
+  required_ratio: 1.0                # share of samples that makes a field required, in (0, 1]
+
+# Flows: spans grouped from an entry operation across async hops, folded into one path per
+# entry. settle_s must outlast the gap between a flow's first and last span.
+# Contract: docs/specs/flows-and-paths.md#completion
+paths:
+  settle_s: 60                       # a flow completes after this long with no span joining it
+  max_open_flows: 10000              # one more evicts the open flow joined least recently
+  max_spans_per_flow: 1000           # more are dropped and the flow is truncated
+
+# What opens incidents besides drift, and how they correlate; each block is off unless declared.
+triggers:
+  # Bursts of error responses per route, counted from SERVER spans:
+  # docs/specs/ingest-drift-and-feedback.md#5xx-bursts.
+  http_errors:
+    status_min: 500                  # a response with this status or higher is an error
+    threshold: 5                     # errors from one route within window_s that open an incident
+    window_s: 60
+  # Fingerprints whose work units an outcome source marks abandoned, counted over the catalog's
+  # retention window. Needs a source with outcome: abandoned:
+  # docs/specs/ingest-drift-and-feedback.md#dlq-attribution.
+  dlq:
+    min_abandoned: 3                 # abandoned work units that carried the fingerprint
+    min_rate: 0.2                    # abandoned over observed work units of the fingerprint
+  # Triggers accepted within window_s of an incident's first one join it, and its dossier merges
+  # their evidence, so a failing release's drift, bursts, and abandonments are one incident.
+  # Longer than paths.settle_s, so a path drift reaches the incident its flows' burst opened.
+  # Without the block each trigger opens its own incident:
+  # docs/specs/ingest-drift-and-feedback.md#correlation.
+  correlation:
+    window_s: 300                    # seconds of the body's clock
+  # Which incident.io incidents belong to the system: any rule that matches maps one here.
+  # Without the block every incident.io incident counts as unmapped for this system. Each rule
+  # sets one of custom_field_id (with values), team_id, or incident_type_id. Quote ids, so YAML
+  # keeps them strings: docs/specs/ingest-drift-and-feedback.md#incidentio-webhook.
+  # Uncomment with the system's ids:
+  # incident_io:
+  #   match:
+  #     # A select or catalog field, such as Affected services; values are option ids, catalog
+  #     # entry ids, or catalog entry external ids.
+  #     - custom_field_id: "<field id>"
+  #       values: ["<catalog entry id>"]
+  #     - team_id: "<team id>"           # a team that owns the incident
+  #     - incident_type_id: "<incident type id>"

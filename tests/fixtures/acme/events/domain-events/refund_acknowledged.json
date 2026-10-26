@@ -1,0 +1,12 @@
+{
+  "id": "wu-fixture-refund-acknowledged-001",
+  "domain": "payments",
+  "eventType": "payments.refund_acknowledged",
+  "occurredAt": "2026-01-15T09:10:00+00:00",
+  "payload": {
+    "ledgerRefundId": "fixture-ledger-refund-001",
+    "refundNumber": "1000001",
+    "orderId": "fixture-order-002",
+    "gatewayRefundId": "fixture-gateway-refund-001"
+  }
+}

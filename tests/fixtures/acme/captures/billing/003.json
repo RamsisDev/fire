@@ -1,0 +1,101 @@
+{
+ "prefix": "billing-payloads/",
+ "name": "01HACME0000000000000000002/ORDER2_20260115_100203_000003.json",
+ "request": {
+  "metadata": {
+   "action": "invoice_place",
+   "api_version": "v2",
+   "direction": "outgoing",
+   "order_id": "redacted",
+   "work_unit_id": "01HACME0000000000000000002"
+  },
+  "document": {
+   "method": "POST",
+   "url": "redacted",
+   "headers": {
+    "host": "redacted",
+    "accept": "redacted",
+    "accept-encoding": "redacted",
+    "connection": "redacted",
+    "content-type": "redacted",
+    "user-agent": "redacted",
+    "x-service-token": "redacted",
+    "cookie": "redacted",
+    "content-length": "redacted",
+    "traceparent": "redacted",
+    "x-amzn-trace-id": "redacted"
+   },
+   "body": {
+    "origin": "redacted",
+    "locale": "redacted",
+    "customer": {
+     "customer_id": "redacted",
+     "guest_checkout": false,
+     "first_name": "redacted",
+     "last_name": "redacted",
+     "email": "redacted",
+     "telephone": "redacted",
+     "wants_marketing_emails": false,
+     "sms_opt_in": false,
+     "is_first_order": false
+    },
+    "items": [
+     {
+      "item_type": "redacted",
+      "product_id": "redacted",
+      "quantity": 0
+     }
+    ],
+    "payments": [
+     {
+      "id": "redacted",
+      "amount": 0,
+      "currency": "redacted",
+      "payment_type": "redacted",
+      "entry_type": "redacted",
+      "card_id": "redacted"
+     }
+    ],
+    "addresses": [
+     {
+      "address_type": "redacted",
+      "existing_address_id": 0
+     }
+    ],
+    "public_order_id": "redacted",
+    "party_id": 0,
+    "shipping_method": "redacted",
+    "app": "redacted"
+   },
+   "api_version": "v2"
+  }
+ },
+ "response": {
+  "metadata": {
+   "action": "invoice_place",
+   "api_version": "v2",
+   "direction": "incoming",
+   "order_id": "redacted",
+   "work_unit_id": "01HACME0000000000000000002"
+  },
+  "document": {
+   "api_version": "v2",
+   "status_code": 500,
+   "headers": {
+    "server": "redacted",
+    "content-type": "redacted",
+    "date": "redacted",
+    "cache-control": "redacted",
+    "content-length": "redacted",
+    "x-upstream-service-time": "redacted",
+    "server-timing": "redacted"
+   },
+   "body": {
+    "error": {
+     "message": "redacted",
+     "status_code": 0
+    }
+   }
+  }
+ }
+}

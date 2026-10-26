@@ -1,0 +1,1071 @@
+{
+ "resourceSpans": [
+  {
+   "resource": {
+    "attributes": [
+     {
+      "key": "service.name",
+      "value": {
+       "stringValue": "acme-api"
+      }
+     },
+     {
+      "key": "service.version",
+      "value": {
+       "stringValue": "redacted"
+      }
+     },
+     {
+      "key": "service.environment",
+      "value": {
+       "stringValue": "redacted"
+      }
+     }
+    ]
+   },
+   "scopeSpans": [
+    {
+     "scope": {
+      "name": "opentelemetry.instrumentation.httpx",
+      "version": "0.66b0"
+     },
+     "spans": [
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "ecccd8187c677406",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "GET",
+       "kind": 3,
+       "startTimeUnixNano": "1768474800525081980",
+       "endTimeUnixNano": "1768474801194214696",
+       "attributes": [
+        {
+         "key": "http.method",
+         "value": {
+          "stringValue": "GET"
+         }
+        },
+        {
+         "key": "http.url",
+         "value": {
+          "stringValue": "https://identity.example.com/api/v1/users?search=redacted"
+         }
+        },
+        {
+         "key": "http.request.header.host",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.accept-encoding",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.connection",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.user-agent",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.content-type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.accept",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.authorization",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.x-request-id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        },
+        {
+         "key": "http.response.header.date",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.content-type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.transfer-encoding",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.connection",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.server",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.vary",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-identity-request-id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.accept-ch",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-xss-protection",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.p3p",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.set-cookie",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.content-security-policy",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-rate-limit-limit",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-rate-limit-remaining",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-rate-limit-reset",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.cache-control",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.pragma",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.expires",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.referrer-policy",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.link",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-content-type-options",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.strict-transport-security",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.content-encoding",
+         "value": {
+          "stringValue": "redacted"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "8961708272f9d9de",
+       "parentSpanId": "65ed256612c27b4f",
+       "flags": 256,
+       "name": "POST",
+       "kind": 3,
+       "startTimeUnixNano": "1768474801196354128",
+       "endTimeUnixNano": "1768474801797835300",
+       "attributes": [
+        {
+         "key": "http.method",
+         "value": {
+          "stringValue": "POST"
+         }
+        },
+        {
+         "key": "http.url",
+         "value": {
+          "stringValue": "https://payments.partner.example.com/v2/tax/tax-code"
+         }
+        },
+        {
+         "key": "http.request.header.host",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.accept-encoding",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.connection",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.user-agent",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.content-type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.accept",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.x-service-token",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.x-request-id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.content-length",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        },
+        {
+         "key": "http.response.header.content-type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.date",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.content-length",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-upstream-service-time",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.server",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.server-timing",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-edge-location",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.body.size",
+         "value": {
+          "intValue": "0"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "9f018f28ead57130",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "POST",
+       "kind": 3,
+       "startTimeUnixNano": "1768474801848114423",
+       "endTimeUnixNano": "1768474802029930481",
+       "attributes": [
+        {
+         "key": "http.method",
+         "value": {
+          "stringValue": "POST"
+         }
+        },
+        {
+         "key": "http.url",
+         "value": {
+          "stringValue": "https://payments.partner.example.com/v1/payments/order-payments/create?customerID=redacted"
+         }
+        },
+        {
+         "key": "http.request.header.host",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.accept-encoding",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.connection",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.user-agent",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.content-type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.accept",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.x-service-token",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.x-request-id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.content-length",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        },
+        {
+         "key": "http.response.header.content-type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.date",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.content-length",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-upstream-service-time",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.server",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.server-timing",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-edge-location",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.body.size",
+         "value": {
+          "intValue": "0"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "7d5b790c6ce6713d",
+       "parentSpanId": "f1d415112eaa0f4e",
+       "flags": 256,
+       "name": "POST",
+       "kind": 3,
+       "startTimeUnixNano": "1768474802056493512",
+       "endTimeUnixNano": "1768474802220285144",
+       "attributes": [
+        {
+         "key": "http.method",
+         "value": {
+          "stringValue": "POST"
+         }
+        },
+        {
+         "key": "http.url",
+         "value": {
+          "stringValue": "https://payments.partner.example.com/v2/tax/calculate-tax/estimate"
+         }
+        },
+        {
+         "key": "http.request.header.host",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.accept-encoding",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.connection",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.user-agent",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.content-type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.accept",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.x-service-token",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.x-request-id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.content-length",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        },
+        {
+         "key": "http.response.header.content-type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.date",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.content-length",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-upstream-service-time",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.server",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.server-timing",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-edge-location",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.body.size",
+         "value": {
+          "intValue": "0"
+         }
+        }
+       ],
+       "status": {}
+      }
+     ],
+     "schemaUrl": "https://opentelemetry.io/schemas/1.11.0"
+    },
+    {
+     "scope": {
+      "name": "acme.payments.tax_code"
+     },
+     "spans": [
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "65ed256612c27b4f",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "tax.lookup_code",
+       "kind": 1,
+       "startTimeUnixNano": "1768474801195556748",
+       "endTimeUnixNano": "1768474801823457032",
+       "attributes": [
+        {
+         "key": "tax.line_count",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "tax.result",
+         "value": {
+          "stringValue": "redacted"
+         }
+        }
+       ],
+       "status": {}
+      }
+     ]
+    },
+    {
+     "scope": {
+      "name": "opentelemetry.instrumentation.botocore.dynamodb",
+      "version": "0.66b0"
+     },
+     "spans": [
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "e6798151615b1ed6",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "DynamoDB.UpdateItem",
+       "kind": 3,
+       "startTimeUnixNano": "1768474801824763042",
+       "endTimeUnixNano": "1768474801847500669",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "DynamoDB"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "UpdateItem"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "localhost"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "9000"
+         }
+        },
+        {
+         "key": "db.system",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "db.operation",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "aws.dynamodb.table_names",
+         "value": {
+          "arrayValue": {
+           "values": [
+            {
+             "stringValue": "acme-dev-worker_leases"
+            }
+           ]
+          }
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "fc21db207f45199f",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "DynamoDB.TransactWriteItems",
+       "kind": 3,
+       "startTimeUnixNano": "1768474802243712859",
+       "endTimeUnixNano": "1768474802294496069",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "DynamoDB"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "TransactWriteItems"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "localhost"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "9000"
+         }
+        },
+        {
+         "key": "db.system",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "db.operation",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      }
+     ],
+     "schemaUrl": "https://opentelemetry.io/schemas/1.11.0"
+    },
+    {
+     "scope": {
+      "name": "acme.payments.tax_estimate"
+     },
+     "spans": [
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "f1d415112eaa0f4e",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "tax.estimate",
+       "kind": 1,
+       "startTimeUnixNano": "1768474802055926632",
+       "endTimeUnixNano": "1768474802240986589",
+       "attributes": [
+        {
+         "key": "tax.order_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "tax.document_code",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "tax.line_count",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "tax.total_estimate_cents",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "tax.result",
+         "value": {
+          "stringValue": "redacted"
+         }
+        }
+       ],
+       "status": {}
+      }
+     ]
+    },
+    {
+     "scope": {
+      "name": "opentelemetry.instrumentation.fastapi",
+      "version": "0.66b0"
+     },
+     "spans": [
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "21786126da9f1cbe",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "POST /v1/orders/checkout http send",
+       "kind": 1,
+       "startTimeUnixNano": "1768474802296685752",
+       "endTimeUnixNano": "1768474802296708961",
+       "attributes": [
+        {
+         "key": "asgi.event.type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "201"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "84727d517d69350f",
+       "parentSpanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "POST /v1/orders/checkout http send",
+       "kind": 1,
+       "startTimeUnixNano": "1768474802297014796",
+       "endTimeUnixNano": "1768474802297021421",
+       "attributes": [
+        {
+         "key": "asgi.event.type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "979bb7309b2a0c9c5e7f8901d465f9e6",
+       "spanId": "5e42669b195898b8",
+       "flags": 256,
+       "name": "POST /v1/orders/checkout",
+       "kind": 2,
+       "startTimeUnixNano": "1768474800000000000",
+       "endTimeUnixNano": "1768474802297087672",
+       "attributes": [
+        {
+         "key": "http.scheme",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.host",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.host.port",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.flavor",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.target",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.url",
+         "value": {
+          "stringValue": "http://localhost:8000/v1/orders/checkout"
+         }
+        },
+        {
+         "key": "http.method",
+         "value": {
+          "stringValue": "POST"
+         }
+        },
+        {
+         "key": "http.server_name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.user_agent",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.ip",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.port",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.route",
+         "value": {
+          "stringValue": "/v1/orders/checkout"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "201"
+         }
+        }
+       ],
+       "status": {}
+      }
+     ],
+     "schemaUrl": "https://opentelemetry.io/schemas/1.11.0"
+    }
+   ]
+  }
+ ]
+}

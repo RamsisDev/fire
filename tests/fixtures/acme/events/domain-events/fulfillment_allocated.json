@@ -1,0 +1,17 @@
+{
+  "id": "wu-fixture-fulfillment-allocated-001",
+  "domain": "fulfillment",
+  "eventType": "fulfillment.allocated",
+  "occurredAt": "2026-01-15T09:00:00+00:00",
+  "payload": {
+    "orderId": "fixture-order-001",
+    "allocatedItems": [
+      {
+        "itemId": "fixture-item-1",
+        "fulfillmentRequestId": "fixture-fulfillment-request-001",
+        "warehouseCode": "WH01",
+        "shipSetId": "fixture-order-001"
+      }
+    ]
+  }
+}

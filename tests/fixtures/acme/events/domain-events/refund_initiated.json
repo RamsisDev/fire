@@ -1,0 +1,23 @@
+{
+  "id": "wu-fixture-refund-initiated-001",
+  "domain": "payments",
+  "eventType": "payments.refund_initiated",
+  "occurredAt": "2026-01-15T09:10:00+00:00",
+  "payload": {
+    "eventType": "customer_refund",
+    "sourceSystem": "fixture-ledger",
+    "requestId": "00000000-0000-4000-8000-000000000101",
+    "publishedAt": "2026-01-15T09:10:00+00:00",
+    "businessUnit": "fixture-business-unit",
+    "orderNumber": "fixture-order-002",
+    "transactionNumber": "fixture-transaction-002",
+    "transactionType": "fixture-card-payment",
+    "transactionDate": "2026-01-14T14:30:00+00:00",
+    "transactionAmount": "42.00",
+    "currency": "USD",
+    "refundAmount": "42.00",
+    "refundNumber": "1000001",
+    "refundDate": "2026-01-15T09:00:00+00:00",
+    "paymentId": "1000000000000001"
+  }
+}

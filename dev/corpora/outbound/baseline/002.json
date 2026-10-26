@@ -1,0 +1,267 @@
+{
+ "prefix": "shipping-payloads/",
+ "name": "01HACME0000000000000000001/ORDER1_create_20260115_100304_000004.json",
+ "request": {
+  "metadata": {
+   "action": "create",
+   "direction": "outgoing",
+   "order_id": "redacted",
+   "work_unit_id": "01HACME0000000000000000001"
+  },
+  "document": {
+   "method": "POST",
+   "url": "redacted",
+   "headers": {
+    "host": "redacted",
+    "accept": "redacted",
+    "accept-encoding": "redacted",
+    "connection": "redacted",
+    "user-agent": "redacted",
+    "content-type": "redacted",
+    "authorization": "redacted",
+    "x-request-id": "redacted",
+    "traceparent": "redacted",
+    "content-length": "redacted"
+   },
+   "body": {
+    "ShipmentReference": "redacted",
+    "SourceSystem": "redacted",
+    "SourceId": "redacted",
+    "CurrencyCode": "redacted",
+    "WarehouseId": 0,
+    "ChannelCode": "redacted",
+    "ServiceLevelCode": "redacted",
+    "AccountNumber": "redacted",
+    "PaymentTerms": "redacted",
+    "SubmittedFlag": false,
+    "InsuredFlag": false,
+    "SignatureRequiredFlag": false,
+    "SaturdayDeliveryFlag": false,
+    "CustomerReference": null,
+    "RequestingSiteId": 0,
+    "billTo": [
+     {
+      "AccountId": 0,
+      "SiteId": 0
+     }
+    ],
+    "shipTo": [
+     {
+      "PartyId": 0,
+      "SiteId": 0
+     }
+    ],
+    "lines": [
+     {
+      "LineReference": "redacted",
+      "LineNumber": "redacted",
+      "Uom": "redacted",
+      "Quantity": 0,
+      "ProductNumber": "redacted",
+      "FulfillmentSiteCode": "redacted",
+      "LineTypeCode": "redacted",
+      "charges": [
+       {
+        "ChargeId": "redacted",
+        "ChargeTypeCode": "redacted",
+        "CurrencyCode": "redacted",
+        "Quantity": 0,
+        "SequenceNumber": 0,
+        "PrimaryFlag": false,
+        "components": [
+         {
+          "ComponentId": "redacted",
+          "UnitPrice": 0.0,
+          "ExtendedAmount": 0.0,
+          "CurrencyCode": "redacted",
+          "ElementCode": "redacted",
+          "SequenceNumber": 0,
+          "RollupFlag": false
+         },
+         {
+          "ComponentId": "redacted",
+          "UnitPrice": 0.0,
+          "ExtendedAmount": 0.0,
+          "CurrencyCode": "redacted",
+          "ElementCode": "redacted",
+          "SequenceNumber": 0,
+          "RollupFlag": false,
+          "Explanation": "redacted"
+         },
+         {
+          "ComponentId": "redacted",
+          "UnitPrice": 0.0,
+          "ExtendedAmount": 0.0,
+          "CurrencyCode": "redacted",
+          "ElementCode": "redacted",
+          "SequenceNumber": 0,
+          "RollupFlag": false,
+          "Explanation": "redacted"
+         }
+        ]
+       }
+      ],
+      "details": [
+       {
+        "ContextCode": "redacted",
+        "costCenter": "redacted",
+        "batchId": null,
+        "supplierId": null,
+        "fulfillmentRequestId": "redacted"
+       }
+      ],
+      "RequestedShipDate": "1970-01-01T00:00:00Z"
+     }
+    ],
+    "recipient": [
+     {
+      "ContextCode": "redacted",
+      "id": "redacted",
+      "firstName": "redacted",
+      "lastName": "redacted",
+      "middleName": null,
+      "company": null,
+      "countryCode": "redacted",
+      "streetAddress": "redacted",
+      "locality": "redacted",
+      "postalCode": "redacted",
+      "region": "redacted",
+      "telephone": "redacted",
+      "email": "redacted@example.com",
+      "residential": "redacted"
+     }
+    ]
+   }
+  }
+ },
+ "response": {
+  "metadata": {
+   "action": "create",
+   "direction": "incoming",
+   "order_id": "redacted",
+   "work_unit_id": "01HACME0000000000000000001"
+  },
+  "document": {
+   "status_code": 201,
+   "headers": {
+    "date": "redacted",
+    "content-type": "redacted",
+    "content-length": "redacted"
+   },
+   "body": {
+    "ShipmentId": 0,
+    "ShipmentNumber": "redacted",
+    "ShipmentKey": "redacted",
+    "ShipmentReference": "redacted",
+    "SourceSystem": "redacted",
+    "SourceId": "redacted",
+    "RevisionNumber": 0,
+    "WarehouseId": 0,
+    "WarehouseName": "redacted",
+    "AccountNumber": "redacted",
+    "CustomerReference": null,
+    "ServiceLevelCode": "redacted",
+    "CurrencyCode": "redacted",
+    "SubmittedFlag": false,
+    "OnHoldFlag": false,
+    "CanceledFlag": false,
+    "StatusCode": "redacted",
+    "CreationDate": "1970-01-01T00:00:00Z",
+    "LastUpdateDate": "1970-01-01T00:00:00Z",
+    "billTo": [
+     {
+      "AccountId": 0,
+      "SiteId": 0,
+      "links": [
+       {
+        "rel": "redacted",
+        "href": "https://example.com/",
+        "name": "redacted",
+        "kind": "redacted",
+        "properties": {
+         "changeIndicator": "redacted"
+        }
+       }
+      ]
+     }
+    ],
+    "shipTo": [
+     {
+      "PartyId": 0,
+      "SiteId": 0,
+      "links": [
+       {
+        "rel": "redacted",
+        "href": "https://example.com/",
+        "name": "redacted",
+        "kind": "redacted",
+        "properties": {
+         "changeIndicator": "redacted"
+        }
+       }
+      ]
+     }
+    ],
+    "lines": [
+     {
+      "ShipmentId": 0,
+      "LineId": 0,
+      "LineNumber": 0,
+      "LineReference": "redacted",
+      "ProductNumber": "redacted",
+      "ProductId": 0,
+      "Quantity": 0.0,
+      "Uom": "redacted",
+      "StatusCode": "redacted",
+      "OnHoldFlag": false,
+      "RequestedShipDate": "1970-01-01T00:00:00Z",
+      "UnitPrice": 0.0,
+      "ExtendedAmount": 0.0,
+      "charges": [
+       {
+        "ChargeId": 0,
+        "ChargeTypeCode": "redacted",
+        "Quantity": 0.0,
+        "SequenceNumber": 0,
+        "PrimaryFlag": false,
+        "links": [
+         {
+          "rel": "redacted",
+          "href": "https://example.com/",
+          "name": "redacted",
+          "kind": "redacted",
+          "properties": {
+           "changeIndicator": "redacted"
+          }
+         }
+        ]
+       }
+      ],
+      "links": [
+       {
+        "rel": "redacted",
+        "href": "https://example.com/",
+        "name": "redacted",
+        "kind": "redacted",
+        "properties": {
+         "changeIndicator": "redacted"
+        }
+       }
+      ]
+     }
+    ],
+    "links": [
+     {
+      "rel": "redacted",
+      "href": "https://example.com/",
+      "name": "redacted",
+      "kind": "redacted",
+      "properties": {
+       "changeIndicator": "redacted"
+      }
+     }
+    ]
+   }
+  }
+ }
+}

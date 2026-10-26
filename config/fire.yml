@@ -1,0 +1,48 @@
+# Global FIRE ENGINE config. Secrets via env refs, never inline.
+api:
+  token_env: FIRE_API_TOKEN
+
+reasoner:
+  provider: echo  # echo; a System One reasoner adapter over HTTP comes next
+  # base_url_env: FIRE_SYSTEMONE_BASE_URL
+  # api_key_env: FIRE_SYSTEMONE_API_KEY
+
+narrator:
+  provider: template  # template | openai_compat
+  base_url_env: FIRE_NARRATOR_BASE_URL
+  api_key_env: FIRE_NARRATOR_API_KEY
+  model_env: FIRE_NARRATOR_MODEL
+
+notifier:
+  provider: console                    # console | slack
+  bot_token_env: FIRE_SLACK_BOT_TOKEN  # slack: env var holding the bot token; unset fails startup
+  timeout_s: 5                         # slack: per chat.postMessage request
+
+budgets:
+  tier0_ms: 300
+  tier1_ms: 3000
+  tier2_ms: 1500
+
+# python -m fire.apps.tentacle: how observations reach the body (docs/specs/tentacle.md).
+tentacle:
+  body_url_env: FIRE_BODY_URL  # env var holding the body's base URL
+  batch_size: 200              # observations per request
+  flush_ms: 1000               # longest a partial batch waits
+  buffer_size: 10000           # observations held before reading pauses
+  retry:
+    max_attempts: 6            # per batch
+    backoff_ms: 500            # first backoff; doubles per attempt up to 30 s, full jitter
+  shutdown_s: 10               # time to send what is pending on shutdown
+
+# Where the body keeps observations, baselines, and paths (docs/specs/observations.md).
+catalog:
+  provider: memory             # memory | sqlite; memory loses everything on restart
+  path_env: FIRE_CATALOG_PATH  # sqlite: env var holding the database file's path
+  retention_s: 604800          # dedupe keys and work_id index entries kept 7 days
+
+# Inbound webhooks, verified by signature instead of X-FIRE-Token
+# (docs/specs/ingest-drift-and-feedback.md#incidentio-webhook).
+webhooks:
+  incident_io:                 # POST /v0/webhooks/incident-io
+    signing_secret_env: FIRE_INCIDENT_IO_SIGNING_SECRET  # env var holding the whsec_ secret
+    tolerance_s: 300           # largest gap between webhook-timestamp and the body's clock

@@ -1,0 +1,36 @@
+{
+  "work_unit_id": "wu-fixture-refund-initiated-001",
+  "source": "sqs",
+  "domain": "payments",
+  "event_type": "payments.refund_initiated",
+  "payload": {
+    "event_type": "customer_refund",
+    "source_system": "fixture-ledger",
+    "request_id": "00000000-0000-4000-8000-000000000101",
+    "published_at": "2026-01-15T09:10:00+00:00",
+    "business_unit": "fixture-business-unit",
+    "order_number": "fixture-order-002",
+    "transaction_number": "fixture-transaction-002",
+    "transaction_type": "fixture-card-payment",
+    "transaction_date": "2026-01-14T14:30:00+00:00",
+    "transaction_amount": "42.00",
+    "currency": "USD",
+    "refund_amount": "42.00",
+    "refund_number": "1000001",
+    "refund_date": "2026-01-15T09:00:00+00:00",
+    "payment_id": "1000000000000001"
+  },
+  "metadata": {
+    "timestamp": "2026-01-15T09:10:00+00:00",
+    "correlation_id": "corr-fixture-refund-initiated-001",
+    "priority": "normal",
+    "region": "us-east-1",
+    "routing": {
+      "business_event_type": "payments.refund_initiated",
+      "target_domains": [
+        "payments"
+      ],
+      "triggered_by": "fixture:sample"
+    }
+  }
+}

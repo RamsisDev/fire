@@ -1,0 +1,29 @@
+# An example OpenTelemetry collector config: a system's own pipeline plus `otlp_http/fire`, one
+# more exporter to the tentacle's OTLP receiver. Keep every exporter the system already has:
+# FIRE's is added, never substituted. Collector images from before `otlphttp` was renamed
+# `otlp_http` (0.157 accepts both) need the old name.
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
+
+exporters:
+  # Stands in for the system's own trace backend.
+  debug:
+    verbosity: basic
+  # The tentacle's receiver, the address the system YAML's `otlp` source reads from its
+  # `listen_env` (ACME_OTLP_LISTEN=127.0.0.1:4318 in the template); /v1/traces is appended.
+  # From a container, host.docker.internal reaches the host.
+  otlp_http/fire:
+    endpoint: http://host.docker.internal:4318
+    encoding: json
+    compression: none
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [debug, otlp_http/fire]

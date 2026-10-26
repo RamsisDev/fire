@@ -1,0 +1,23 @@
+{
+  "id": "wu-fixture-return-received-001",
+  "domain": "fulfillment",
+  "eventType": "fulfillment.return_received",
+  "occurredAt": "2026-01-15T09:05:30.123456+00:00",
+  "payload": {
+    "transactionId": "fixture-transaction-001",
+    "createdTimestamp": "2026-01-15T09:05:30.123456+00:00",
+    "event": "return_receive",
+    "eventTimestamp": "2026-01-15T09:05:30.123456+00:00",
+    "facility": "WH01",
+    "receiptType": "RETURN",
+    "returnId": "fixture-return-001",
+    "warehouseSystem": "fixture-warehouse-system",
+    "lines": [
+      {
+        "productId": 1001,
+        "quantity": 1,
+        "returnItemId": "fixture-return-item-001"
+      }
+    ]
+  }
+}

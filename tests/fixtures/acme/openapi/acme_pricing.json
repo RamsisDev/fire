@@ -1,0 +1,19 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "acme-pricing",
+    "version": "v0.0.1"
+  },
+  "paths": {
+    "/v1/quote": {
+      "post": {
+        "operationId": "quote_v1_quote_post"
+      }
+    },
+    "/healthcheck": {
+      "get": {
+        "operationId": "healthcheck_healthcheck_get"
+      }
+    }
+  }
+}

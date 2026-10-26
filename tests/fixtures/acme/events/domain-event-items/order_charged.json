@@ -1,0 +1,63 @@
+{
+  "PK": {
+    "S": "ORDER#fixture-order-001"
+  },
+  "SK": {
+    "S": "EVENT#wu-fixture-order-charged-001"
+  },
+  "entity_type": {
+    "S": "EVENT"
+  },
+  "event_type": {
+    "S": "order.charged"
+  },
+  "source_entity_type": {
+    "S": "ORDER"
+  },
+  "origin_region": {
+    "S": "us-east-1"
+  },
+  "correlation_id": {
+    "S": "corr-fixture-order-charged-001"
+  },
+  "target_domains": {
+    "L": [
+      {
+        "S": "order"
+      }
+    ]
+  },
+  "triggered_by": {
+    "S": "fixture:sample"
+  },
+  "payload_type": {
+    "S": "FixturePayload"
+  },
+  "payload": {
+    "M": {
+      "order_id": {
+        "S": "fixture-order-001"
+      }
+    }
+  },
+  "fence": {
+    "M": {
+      "ORDER#fixture-order-001": {
+        "M": {
+          "ORDER#fixture-order-001": {
+            "N": "1"
+          }
+        }
+      }
+    }
+  },
+  "created_at": {
+    "S": "2026-01-15T09:00:00+00:00"
+  },
+  "expires_at": {
+    "N": "1771059600"
+  },
+  "writer_traceparent": {
+    "S": "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01"
+  }
+}

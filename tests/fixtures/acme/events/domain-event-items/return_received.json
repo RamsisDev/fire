@@ -1,0 +1,101 @@
+{
+  "PK": {
+    "S": "ORDER#wu-fixture-return-received-001"
+  },
+  "SK": {
+    "S": "EVENT#wu-fixture-return-received-001"
+  },
+  "entity_type": {
+    "S": "EVENT"
+  },
+  "event_type": {
+    "S": "fulfillment.return_received"
+  },
+  "source_entity_type": {
+    "S": "ORDER"
+  },
+  "origin_region": {
+    "S": "us-east-1"
+  },
+  "correlation_id": {
+    "S": "corr-fixture-return-received-001"
+  },
+  "target_domains": {
+    "L": [
+      {
+        "S": "fulfillment"
+      }
+    ]
+  },
+  "triggered_by": {
+    "S": "fixture:return_receive"
+  },
+  "payload_type": {
+    "S": "FixturePayload"
+  },
+  "payload": {
+    "M": {
+      "transaction_id": {
+        "S": "fixture-transaction-001"
+      },
+      "created_timestamp": {
+        "S": "2026-01-15T09:05:30.123456+00:00"
+      },
+      "event": {
+        "S": "return_receive"
+      },
+      "event_timestamp": {
+        "S": "2026-01-15T09:05:30.123456+00:00"
+      },
+      "facility": {
+        "S": "WH01"
+      },
+      "receipt_type": {
+        "S": "RETURN"
+      },
+      "return_id": {
+        "S": "fixture-return-001"
+      },
+      "warehouse_system": {
+        "S": "fixture-warehouse-system"
+      },
+      "lines": {
+        "L": [
+          {
+            "M": {
+              "product_id": {
+                "N": "1001"
+              },
+              "quantity": {
+                "N": "1"
+              },
+              "return_item_id": {
+                "S": "fixture-return-item-001"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "fence": {
+    "M": {
+      "ORDER#wu-fixture-return-received-001": {
+        "M": {
+          "ORDER#wu-fixture-return-received-001": {
+            "N": "1"
+          }
+        }
+      }
+    }
+  },
+  "created_at": {
+    "S": "2026-01-15T09:05:30.123456+00:00"
+  },
+  "expires_at": {
+    "N": "1771059930"
+  },
+  "writer_traceparent": {
+    "S": "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01"
+  }
+}

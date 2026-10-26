@@ -1,0 +1,30 @@
+{
+  "work_unit_id": "wu-fixture-fulfillment-allocated-001",
+  "source": "dynamodb",
+  "domain": "fulfillment",
+  "event_type": "fulfillment.allocated",
+  "payload": {
+    "order_id": "fixture-order-001",
+    "allocated_items": [
+      {
+        "item_id": "fixture-item-1",
+        "fulfillment_request_id": "fixture-fulfillment-request-001",
+        "warehouse_code": "WH01",
+        "ship_set_id": "fixture-order-001"
+      }
+    ]
+  },
+  "metadata": {
+    "timestamp": "2026-01-15T09:00:00+00:00",
+    "correlation_id": "corr-fixture-fulfillment-allocated-001",
+    "priority": "normal",
+    "region": "us-east-1",
+    "routing": {
+      "business_event_type": "fulfillment.allocated",
+      "target_domains": [
+        "fulfillment"
+      ],
+      "triggered_by": "fixture:sample"
+    }
+  }
+}

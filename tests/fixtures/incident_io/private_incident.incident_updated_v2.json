@@ -1,0 +1,6 @@
+{
+  "event_type": "private_incident.incident_updated_v2",
+  "private_incident.incident_updated_v2": {
+    "id": "abc123"
+  }
+}

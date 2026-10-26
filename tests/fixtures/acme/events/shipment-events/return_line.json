@@ -1,0 +1,12 @@
+{
+  "event_type": "delivered",
+  "source_system": "fixture-carrier-hub",
+  "request_id": "00000000-0000-4000-8000-000000000201",
+  "published_at": "2026-01-16T12:00:30+00:00",
+  "message_id": "evt_00000000000000000000000000000201",
+  "tracker_id": "trk_00000000000000000000000000000201",
+  "tracking_number": "9400100000000000000201",
+  "occurred_at": "2026-01-16T12:00:00+00:00",
+  "return_id": "fixture-return-001",
+  "return_item_id": "01HZX5M0000000000000000201"
+}

@@ -1,0 +1,77 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "acme-api",
+    "version": "v0.0.1"
+  },
+  "paths": {
+    "/v1/orders/search": {
+      "get": {
+        "operationId": "search_orders_v1_orders_search_get"
+      }
+    },
+    "/v1/orders/checkout": {
+      "post": {
+        "operationId": "checkout_v1_orders_checkout_post"
+      }
+    },
+    "/v1/orders/{order_id}": {
+      "get": {
+        "operationId": "get_order_v1_orders__order_id__get"
+      }
+    },
+    "/v1/orders/{order_id}/items": {
+      "get": {
+        "operationId": "list_order_items_v1_orders__order_id__items_get"
+      }
+    },
+    "/v1/orders/{order_id}/items/{item_id}": {
+      "get": {
+        "operationId": "get_order_item_v1_orders__order_id__items__item_id__get"
+      }
+    },
+    "/v1/orders/{order_id}/cancel": {
+      "post": {
+        "operationId": "cancel_order_v1_orders__order_id__cancel_post"
+      }
+    },
+    "/v1/carts/{cart_id}": {
+      "get": {
+        "operationId": "get_cart_v1_carts__cart_id__get"
+      },
+      "patch": {
+        "operationId": "update_cart_v1_carts__cart_id__patch"
+      }
+    },
+    "/v1/catalog/resolve": {
+      "post": {
+        "operationId": "resolve_catalog_item_v1_catalog_resolve_post"
+      }
+    },
+    "/v1/files/{path}": {
+      "get": {
+        "operationId": "get_file_v1_files__path__get"
+      }
+    },
+    "/v1/tasks": {
+      "get": {
+        "operationId": "list_tasks_v1_tasks_get"
+      }
+    },
+    "/v1/tasks/{task_id}": {
+      "get": {
+        "operationId": "get_task_v1_tasks__task_id__get"
+      }
+    },
+    "/v1/tasks/close": {
+      "post": {
+        "operationId": "close_tasks_v1_tasks_close_post"
+      }
+    },
+    "/healthcheck": {
+      "get": {
+        "operationId": "healthcheck_healthcheck_get"
+      }
+    }
+  }
+}

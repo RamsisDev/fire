@@ -1,0 +1,78 @@
+{
+ "prefix": "notification-payloads/",
+ "name": "01HACME0000000000000000001/send_order_confirmation_20260115_100506_000006.json",
+ "request": {
+  "metadata": {
+   "action": "send_order_confirmation",
+   "direction": "outgoing",
+   "work_unit_id": "01HACME0000000000000000001"
+  },
+  "document": {
+   "method": "POST",
+   "url": "redacted",
+   "headers": {
+    "host": "redacted",
+    "accept": "redacted",
+    "accept-encoding": "redacted",
+    "connection": "redacted",
+    "user-agent": "redacted",
+    "content-type": "redacted",
+    "authorization": "redacted",
+    "x-request-id": "redacted",
+    "traceparent": "redacted",
+    "content-length": "redacted"
+   },
+   "body": {
+    "items_per_type": {
+     "physical": [
+      {
+       "line_item_info": {
+        "id": "redacted",
+        "amount_in_cents": 0,
+        "quantity": 0
+       },
+       "product_info": {
+        "is_gift": false,
+        "is_fragile": false,
+        "is_oversized": false,
+        "is_perishable": false,
+        "is_digital": false,
+        "is_preorder": false,
+        "price": 0,
+        "is_backordered": false,
+        "is_subscription": false
+       }
+      }
+     ]
+    },
+    "channel": "redacted",
+    "template_group": "redacted",
+    "total_amount": 0,
+    "order_id": "redacted",
+    "is_resend": false,
+    "requested_at": "1970-01-01T00:00:00Z"
+   }
+  }
+ },
+ "response": {
+  "metadata": {
+   "action": "send_order_confirmation",
+   "direction": "incoming",
+   "work_unit_id": "01HACME0000000000000000001"
+  },
+  "document": {
+   "status_code": 200,
+   "headers": {
+    "date": "redacted",
+    "content-type": "redacted",
+    "content-length": "redacted"
+   },
+   "body": {
+    "accepted_count": 0,
+    "rejected_count": 0,
+    "accepted_by_item": {},
+    "rejected_by_item": {}
+   }
+  }
+ }
+}

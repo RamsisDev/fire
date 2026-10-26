@@ -1,0 +1,608 @@
+{
+  "externalSources": [
+    {
+      "id": "external:acme_api",
+      "label": "Acme API",
+      "transport": "http_sync",
+      "listener": "order_listener",
+      "wireFormat": "checkout | execute_action",
+      "wireEvents": null,
+      "eventConditions": {
+        "return.created": "has_returns"
+      },
+      "firstEvents": [
+        "order.address_changed",
+        "order.cancel_requested",
+        "order.created",
+        "return.created"
+      ],
+      "terraformRef": null,
+      "sourceFile": "core/use_cases/checkout/mapper.py"
+    },
+    {
+      "id": "external:inventory_service",
+      "label": "Inventory service",
+      "transport": "kinesis",
+      "listener": "stream_listener",
+      "wireFormat": "insert:stock_level | update:stock_level",
+      "wireEvents": {
+        "insert:stock_level": "inventory.stock_created",
+        "update:stock_level": "inventory.stock_updated"
+      },
+      "eventConditions": null,
+      "firstEvents": [
+        "inventory.stock_created",
+        "inventory.stock_updated"
+      ],
+      "terraformRef": "aws_lambda_event_source_mapping.inventory_updates",
+      "sourceFile": "adapters/event_transformers/stream_transformer.py"
+    },
+    {
+      "id": "external:warehouse",
+      "label": "Warehouse",
+      "transport": "sqs",
+      "listener": "queue_listener",
+      "wireFormat": "warehouse.{body.event}",
+      "wireEvents": null,
+      "eventConditions": null,
+      "firstEvents": [
+        "fulfillment.picked",
+        "fulfillment.return_received",
+        "fulfillment.shipped"
+      ],
+      "terraformRef": "aws_lambda_event_source_mapping.warehouse_queue",
+      "sourceFile": "adapters/event_transformers/queue_transformer.py"
+    },
+    {
+      "id": "external:carrier_hub",
+      "label": "Carrier events",
+      "transport": "sqs",
+      "listener": "queue_listener",
+      "wireFormat": null,
+      "wireEvents": null,
+      "eventConditions": null,
+      "firstEvents": [
+        "shipping.carrier_event_received"
+      ],
+      "terraformRef": null,
+      "sourceFile": "adapters/event_transformers/queue_transformer.py"
+    },
+    {
+      "id": "external:ledger",
+      "label": "Ledger",
+      "transport": "sns",
+      "listener": "queue_listener",
+      "wireFormat": null,
+      "wireEvents": null,
+      "eventConditions": null,
+      "firstEvents": [
+        "payments.refund_acknowledged",
+        "payments.refund_initiated"
+      ],
+      "terraformRef": null,
+      "sourceFile": "adapters/event_transformers/queue_transformer.py"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "fulfillment.allocated",
+      "kind": "event"
+    },
+    {
+      "id": "fulfillment.picked",
+      "kind": "event"
+    },
+    {
+      "id": "fulfillment.return_received",
+      "kind": "event"
+    },
+    {
+      "id": "fulfillment.shipped",
+      "kind": "event"
+    },
+    {
+      "id": "inventory.stock_created",
+      "kind": "event"
+    },
+    {
+      "id": "inventory.stock_updated",
+      "kind": "event"
+    },
+    {
+      "id": "order.address_changed",
+      "kind": "event"
+    },
+    {
+      "id": "order.cancel_requested",
+      "kind": "event"
+    },
+    {
+      "id": "order.cancelled",
+      "kind": "event"
+    },
+    {
+      "id": "order.charged",
+      "kind": "event"
+    },
+    {
+      "id": "order.created",
+      "kind": "event"
+    },
+    {
+      "id": "payments.refund_acknowledged",
+      "kind": "event"
+    },
+    {
+      "id": "payments.refund_initiated",
+      "kind": "event"
+    },
+    {
+      "id": "return.created",
+      "kind": "event"
+    }
+  ],
+  "edges": [
+    {
+      "from": "external:acme_api",
+      "to": "order.address_changed",
+      "transport": "http_sync",
+      "listener": "order_listener"
+    },
+    {
+      "from": "external:acme_api",
+      "to": "order.cancel_requested",
+      "transport": "http_sync",
+      "listener": "order_listener"
+    },
+    {
+      "from": "external:acme_api",
+      "to": "order.created",
+      "transport": "http_sync",
+      "listener": "order_listener"
+    },
+    {
+      "from": "external:acme_api",
+      "to": "return.created",
+      "transport": "http_sync",
+      "listener": "order_listener",
+      "condition": "has_returns"
+    },
+    {
+      "from": "external:inventory_service",
+      "to": "inventory.stock_created",
+      "transport": "kinesis",
+      "listener": "stream_listener",
+      "wire": "insert:stock_level"
+    },
+    {
+      "from": "external:inventory_service",
+      "to": "inventory.stock_updated",
+      "transport": "kinesis",
+      "listener": "stream_listener",
+      "wire": "update:stock_level"
+    },
+    {
+      "from": "external:warehouse",
+      "to": "fulfillment.picked",
+      "transport": "sqs",
+      "listener": "queue_listener"
+    },
+    {
+      "from": "external:warehouse",
+      "to": "fulfillment.return_received",
+      "transport": "sqs",
+      "listener": "queue_listener"
+    },
+    {
+      "from": "external:warehouse",
+      "to": "fulfillment.shipped",
+      "transport": "sqs",
+      "listener": "queue_listener"
+    },
+    {
+      "from": "external:carrier_hub",
+      "to": "shipping.carrier_event_received",
+      "transport": "sqs",
+      "listener": "queue_listener"
+    },
+    {
+      "from": "external:ledger",
+      "to": "payments.refund_acknowledged",
+      "transport": "sns",
+      "listener": "queue_listener"
+    },
+    {
+      "from": "external:ledger",
+      "to": "payments.refund_initiated",
+      "transport": "sns",
+      "listener": "queue_listener"
+    },
+    {
+      "from": "order.created",
+      "to": "order.charged",
+      "emitter": "checkout-processor",
+      "condition": null,
+      "source": "apps/checkout_processor/handler.py"
+    },
+    {
+      "from": "order.created",
+      "to": "order.placement_unsettled",
+      "emitter": "checkout-processor",
+      "condition": "charge_failed",
+      "source": "apps/checkout_processor/handler.py"
+    },
+    {
+      "from": "order.charged",
+      "to": "fulfillment.allocated",
+      "emitter": "inventory-publisher",
+      "condition": null,
+      "source": "apps/inventory_publisher/handler.py"
+    },
+    {
+      "from": "order.cancel_requested",
+      "to": "order.cancelled",
+      "emitter": "checkout-processor",
+      "condition": null,
+      "source": "apps/checkout_processor/handler.py"
+    },
+    {
+      "from": "fulfillment.allocated",
+      "to": "fulfillment.picked",
+      "emitter": "fulfillment-processor",
+      "condition": null,
+      "source": "apps/fulfillment_processor/handler.py"
+    },
+    {
+      "from": "fulfillment.picked",
+      "to": "fulfillment.shipped",
+      "emitter": "fulfillment-processor",
+      "condition": null,
+      "source": "apps/fulfillment_processor/handler.py"
+    },
+    {
+      "from": "fulfillment.shipped",
+      "to": "notification.send",
+      "emitter": "notification-sender",
+      "condition": null,
+      "source": "apps/notification_sender/handler.py"
+    },
+    {
+      "from": "return.created",
+      "to": "payments.refund_initiated",
+      "emitter": "payments-processor",
+      "condition": null,
+      "source": "apps/payments_processor/handler.py"
+    },
+    {
+      "from": "fulfillment.return_received",
+      "to": "payments.refund_initiated",
+      "emitter": "payments-processor",
+      "condition": null,
+      "source": "apps/payments_processor/handler.py"
+    },
+    {
+      "from": "payments.refund_initiated",
+      "to": "payments.refund_acknowledged",
+      "emitter": "payments-processor",
+      "condition": null,
+      "source": "apps/payments_processor/handler.py"
+    },
+    {
+      "from": "inventory.stock_updated",
+      "to": "fulfillment.allocated",
+      "emitter": "inventory-publisher",
+      "condition": "backorder",
+      "source": "apps/inventory_publisher/handler.py"
+    }
+  ],
+  "consumers": {
+    "order.created": [
+      "search-indexer",
+      "stream-publisher",
+      "checkout-processor",
+      "stream-publisher"
+    ],
+    "order.charged": [
+      "search-indexer",
+      "stream-publisher",
+      "inventory-publisher"
+    ],
+    "order.cancel_requested": [
+      "stream-publisher",
+      "checkout-processor"
+    ],
+    "order.cancelled": [
+      "search-indexer",
+      "stream-publisher"
+    ],
+    "order.address_changed": [
+      "stream-publisher"
+    ],
+    "return.created": [
+      "stream-publisher",
+      "payments-processor"
+    ],
+    "fulfillment.allocated": [
+      "search-indexer",
+      "stream-publisher",
+      "fulfillment-processor"
+    ],
+    "fulfillment.picked": [
+      "stream-publisher",
+      "fulfillment-processor"
+    ],
+    "fulfillment.shipped": [
+      "search-indexer",
+      "stream-publisher",
+      "notification-sender"
+    ],
+    "fulfillment.return_received": [
+      "stream-publisher",
+      "payments-processor"
+    ],
+    "payments.refund_initiated": [
+      "stream-publisher",
+      "payments-processor"
+    ],
+    "payments.refund_acknowledged": [
+      "payments-processor"
+    ],
+    "inventory.stock_updated": [
+      "inventory-publisher"
+    ],
+    "notification.send": [
+      "notification-sender"
+    ]
+  },
+  "payloads": {
+    "order.created": {
+      "type": "OrderCreatedPayload",
+      "sourceFile": "core/models/order_payloads.py",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "str"
+        }
+      ]
+    },
+    "order.charged": {
+      "type": "OrderChargedPayload",
+      "sourceFile": "core/models/order_payloads.py",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "str"
+        }
+      ]
+    },
+    "order.cancel_requested": {
+      "type": "OrderCancelRequestedPayload",
+      "sourceFile": "core/models/order_payloads.py",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "str"
+        },
+        {
+          "name": "reason",
+          "type": "str | None"
+        }
+      ]
+    },
+    "order.cancelled": {
+      "type": "OrderCancelledPayload",
+      "sourceFile": "core/models/order_payloads.py",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "str"
+        }
+      ]
+    },
+    "order.address_changed": {
+      "type": "AddressChangedPayload",
+      "sourceFile": "core/models/order_payloads.py",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "str"
+        },
+        {
+          "name": "address",
+          "type": "Address"
+        }
+      ]
+    },
+    "return.created": {
+      "type": "ReturnCreatedPayload",
+      "sourceFile": "core/models/order_payloads.py",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "str"
+        },
+        {
+          "name": "return_id",
+          "type": "str"
+        }
+      ]
+    },
+    "fulfillment.allocated": {
+      "type": "FulfillmentAllocatedPayload",
+      "sourceFile": "core/models/fulfillment_payloads.py",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "str"
+        },
+        {
+          "name": "allocated_items",
+          "type": "list[AllocatedItem]"
+        }
+      ]
+    },
+    "fulfillment.picked": {
+      "type": "FulfillmentPickedPayload",
+      "sourceFile": "core/models/fulfillment_payloads.py",
+      "fields": [
+        {
+          "name": "transaction_id",
+          "type": "str"
+        },
+        {
+          "name": "event_timestamp",
+          "type": "datetime"
+        },
+        {
+          "name": "facility",
+          "type": "str"
+        }
+      ]
+    },
+    "fulfillment.shipped": {
+      "type": "FulfillmentShippedPayload",
+      "sourceFile": "core/models/fulfillment_payloads.py",
+      "fields": [
+        {
+          "name": "transaction_id",
+          "type": "str"
+        },
+        {
+          "name": "tracking_number",
+          "type": "str"
+        },
+        {
+          "name": "shipment_number",
+          "type": "str | None"
+        }
+      ]
+    },
+    "fulfillment.return_received": {
+      "type": "ReturnReceivedPayload",
+      "sourceFile": "core/models/fulfillment_payloads.py",
+      "fields": [
+        {
+          "name": "transaction_id",
+          "type": "str"
+        },
+        {
+          "name": "created_timestamp",
+          "type": "datetime"
+        },
+        {
+          "name": "event",
+          "type": "str"
+        },
+        {
+          "name": "event_timestamp",
+          "type": "datetime"
+        },
+        {
+          "name": "facility",
+          "type": "str"
+        },
+        {
+          "name": "receipt_type",
+          "type": "str"
+        },
+        {
+          "name": "return_id",
+          "type": "str"
+        },
+        {
+          "name": "warehouse_system",
+          "type": "str"
+        },
+        {
+          "name": "lines",
+          "type": "list[ReturnLine]"
+        }
+      ]
+    },
+    "payments.refund_initiated": {
+      "type": "RefundInitiatedPayload",
+      "sourceFile": "core/models/payment_payloads.py",
+      "fields": [
+        {
+          "name": "request_id",
+          "type": "str"
+        },
+        {
+          "name": "order_number",
+          "type": "str"
+        },
+        {
+          "name": "refund_amount",
+          "type": "Decimal"
+        },
+        {
+          "name": "currency",
+          "type": "str"
+        }
+      ]
+    },
+    "payments.refund_acknowledged": {
+      "type": "RefundAcknowledgedPayload",
+      "sourceFile": "core/models/payment_payloads.py",
+      "fields": [
+        {
+          "name": "ledger_refund_id",
+          "type": "str"
+        },
+        {
+          "name": "refund_number",
+          "type": "str"
+        },
+        {
+          "name": "order_id",
+          "type": "str"
+        }
+      ]
+    },
+    "inventory.stock_updated": {
+      "type": "StockUpdatedPayload",
+      "sourceFile": "core/models/inventory_payloads.py",
+      "fields": [
+        {
+          "name": "sku_id",
+          "type": "int"
+        }
+      ]
+    },
+    "notification.send": {
+      "type": "NotificationPayload",
+      "sourceFile": null,
+      "fields": []
+    }
+  },
+  "processors": {
+    "checkout-processor": {
+      "regionPolicy": "origin_only",
+      "sourceFile": "apps/checkout_processor/handler.py"
+    },
+    "fulfillment-processor": {
+      "regionPolicy": "origin_only",
+      "sourceFile": "apps/fulfillment_processor/handler.py"
+    },
+    "inventory-publisher": {
+      "regionPolicy": "origin_only",
+      "sourceFile": "apps/inventory_publisher/handler.py"
+    },
+    "notification-sender": {
+      "regionPolicy": "all_regions",
+      "sourceFile": "apps/notification_sender/handler.py"
+    },
+    "payments-processor": {
+      "regionPolicy": "origin_only",
+      "sourceFile": "apps/payments_processor/handler.py"
+    },
+    "search-indexer": {
+      "regionPolicy": "origin_only",
+      "sourceFile": "apps/search_indexer/handler.py"
+    },
+    "stream-publisher": {
+      "regionPolicy": "all_regions",
+      "sourceFile": "apps/stream_publisher/handler.py"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "work_unit_id": "wu-fixture-refund-acknowledged-001",
+  "source": "sqs",
+  "domain": "payments",
+  "event_type": "payments.refund_acknowledged",
+  "payload": {
+    "ledger_refund_id": "fixture-ledger-refund-001",
+    "refund_number": "1000001",
+    "order_id": "fixture-order-002",
+    "gateway_refund_id": "fixture-gateway-refund-001"
+  },
+  "metadata": {
+    "timestamp": "2026-01-15T09:10:00+00:00",
+    "correlation_id": "fixture-ledger-refund-001",
+    "priority": "normal",
+    "region": "us-east-1",
+    "routing": {
+      "business_event_type": "payments.refund_acknowledged",
+      "target_domains": [
+        "payments"
+      ],
+      "triggered_by": "fixture:sample"
+    }
+  }
+}

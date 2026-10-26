@@ -1,0 +1,36 @@
+{
+  "work_unit_id": "wu-fixture-return-received-001",
+  "source": "sqs",
+  "domain": "fulfillment",
+  "event_type": "fulfillment.return_received",
+  "payload": {
+    "transaction_id": "fixture-transaction-001",
+    "created_timestamp": "2026-01-15T09:05:30.123456+00:00",
+    "event": "return_receive",
+    "event_timestamp": "2026-01-15T09:05:30.123456+00:00",
+    "facility": "WH01",
+    "receipt_type": "RETURN",
+    "return_id": "fixture-return-001",
+    "warehouse_system": "fixture-warehouse-system",
+    "lines": [
+      {
+        "product_id": 1001,
+        "quantity": 1,
+        "return_item_id": "fixture-return-item-001"
+      }
+    ]
+  },
+  "metadata": {
+    "timestamp": "2026-01-15T09:05:30.123456+00:00",
+    "correlation_id": "corr-fixture-return-received-001",
+    "priority": "normal",
+    "region": "us-east-1",
+    "routing": {
+      "business_event_type": "fulfillment.return_received",
+      "target_domains": [
+        "fulfillment"
+      ],
+      "triggered_by": "fixture:return_receive"
+    }
+  }
+}

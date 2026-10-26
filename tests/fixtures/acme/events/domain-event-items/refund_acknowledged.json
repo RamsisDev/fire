@@ -1,0 +1,72 @@
+{
+  "PK": {
+    "S": "ORDER#fixture-order-002"
+  },
+  "SK": {
+    "S": "EVENT#wu-fixture-refund-acknowledged-001"
+  },
+  "entity_type": {
+    "S": "EVENT"
+  },
+  "event_type": {
+    "S": "payments.refund_acknowledged"
+  },
+  "source_entity_type": {
+    "S": "ORDER"
+  },
+  "origin_region": {
+    "S": "us-east-1"
+  },
+  "correlation_id": {
+    "S": "fixture-ledger-refund-001"
+  },
+  "target_domains": {
+    "L": [
+      {
+        "S": "payments"
+      }
+    ]
+  },
+  "triggered_by": {
+    "S": "fixture:sample"
+  },
+  "payload_type": {
+    "S": "FixturePayload"
+  },
+  "payload": {
+    "M": {
+      "ledger_refund_id": {
+        "S": "fixture-ledger-refund-001"
+      },
+      "refund_number": {
+        "S": "1000001"
+      },
+      "order_id": {
+        "S": "fixture-order-002"
+      },
+      "gateway_refund_id": {
+        "S": "fixture-gateway-refund-001"
+      }
+    }
+  },
+  "fence": {
+    "M": {
+      "ORDER#fixture-order-002": {
+        "M": {
+          "ORDER#fixture-order-002": {
+            "N": "1"
+          }
+        }
+      }
+    }
+  },
+  "created_at": {
+    "S": "2026-01-15T09:10:00+00:00"
+  },
+  "expires_at": {
+    "N": "1771060200"
+  },
+  "writer_traceparent": {
+    "S": "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01"
+  }
+}

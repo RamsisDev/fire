@@ -1,0 +1,105 @@
+{
+  "PK": {
+    "S": "ORDER#wu-fixture-refund-initiated-001"
+  },
+  "SK": {
+    "S": "EVENT#wu-fixture-refund-initiated-001"
+  },
+  "entity_type": {
+    "S": "EVENT"
+  },
+  "event_type": {
+    "S": "payments.refund_initiated"
+  },
+  "source_entity_type": {
+    "S": "ORDER"
+  },
+  "origin_region": {
+    "S": "us-east-1"
+  },
+  "correlation_id": {
+    "S": "corr-fixture-refund-initiated-001"
+  },
+  "target_domains": {
+    "L": [
+      {
+        "S": "payments"
+      }
+    ]
+  },
+  "triggered_by": {
+    "S": "fixture:sample"
+  },
+  "payload_type": {
+    "S": "FixturePayload"
+  },
+  "payload": {
+    "M": {
+      "event_type": {
+        "S": "customer_refund"
+      },
+      "source_system": {
+        "S": "fixture-ledger"
+      },
+      "request_id": {
+        "S": "00000000-0000-4000-8000-000000000101"
+      },
+      "published_at": {
+        "S": "2026-01-15T09:10:00+00:00"
+      },
+      "business_unit": {
+        "S": "fixture-business-unit"
+      },
+      "order_number": {
+        "S": "fixture-order-002"
+      },
+      "transaction_number": {
+        "S": "fixture-transaction-002"
+      },
+      "transaction_type": {
+        "S": "fixture-card-payment"
+      },
+      "transaction_date": {
+        "S": "2026-01-14T14:30:00+00:00"
+      },
+      "transaction_amount": {
+        "S": "42.00"
+      },
+      "currency": {
+        "S": "USD"
+      },
+      "refund_amount": {
+        "S": "42.00"
+      },
+      "refund_number": {
+        "S": "1000001"
+      },
+      "refund_date": {
+        "S": "2026-01-15T09:00:00+00:00"
+      },
+      "payment_id": {
+        "S": "1000000000000001"
+      }
+    }
+  },
+  "fence": {
+    "M": {
+      "ORDER#wu-fixture-refund-initiated-001": {
+        "M": {
+          "ORDER#wu-fixture-refund-initiated-001": {
+            "N": "1"
+          }
+        }
+      }
+    }
+  },
+  "created_at": {
+    "S": "2026-01-15T09:10:00+00:00"
+  },
+  "expires_at": {
+    "N": "1771060200"
+  },
+  "writer_traceparent": {
+    "S": "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01"
+  }
+}

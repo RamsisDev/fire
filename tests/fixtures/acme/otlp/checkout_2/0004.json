@@ -1,0 +1,1126 @@
+{
+ "resourceSpans": [
+  {
+   "resource": {
+    "attributes": [
+     {
+      "key": "service.name",
+      "value": {
+       "stringValue": "acme-billing-publisher"
+      }
+     },
+     {
+      "key": "service.version",
+      "value": {
+       "stringValue": "redacted"
+      }
+     },
+     {
+      "key": "service.environment",
+      "value": {
+       "stringValue": "redacted"
+      }
+     }
+    ]
+   },
+   "scopeSpans": [
+    {
+     "scope": {
+      "name": "opentelemetry.instrumentation.botocore.dynamodb",
+      "version": "0.66b0"
+     },
+     "spans": [
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "64fa71b6d5667a47",
+       "parentSpanId": "5362143956b3198a",
+       "flags": 256,
+       "name": "DynamoDB.GetItem",
+       "kind": 3,
+       "startTimeUnixNano": "1768474809735058036",
+       "endTimeUnixNano": "1768474809761416190",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "DynamoDB"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "GetItem"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "localhost"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "9000"
+         }
+        },
+        {
+         "key": "db.system",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "db.operation",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "aws.dynamodb.table_names",
+         "value": {
+          "arrayValue": {
+           "values": [
+            {
+             "stringValue": "acme-outbox-dev"
+            }
+           ]
+          }
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "729d958fda68603e",
+       "parentSpanId": "21953483e976110d",
+       "flags": 256,
+       "name": "DynamoDB.Query",
+       "kind": 3,
+       "startTimeUnixNano": "1768474809762599282",
+       "endTimeUnixNano": "1768474809783232102",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "DynamoDB"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "Query"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "localhost"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "9000"
+         }
+        },
+        {
+         "key": "db.system",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "db.operation",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "aws.dynamodb.table_names",
+         "value": {
+          "arrayValue": {
+           "values": [
+            {
+             "stringValue": "acme-dev-billing_orders"
+            }
+           ]
+          }
+         }
+        },
+        {
+         "key": "aws.dynamodb.scan_forward",
+         "value": {
+          "boolValue": false
+         }
+        },
+        {
+         "key": "aws.dynamodb.consistent_read",
+         "value": {
+          "boolValue": false
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "442d0289ac4bb1a0",
+       "parentSpanId": "4f56a78a88e20443",
+       "flags": 256,
+       "name": "DynamoDB.PutItem",
+       "kind": 3,
+       "startTimeUnixNano": "1768474810636077472",
+       "endTimeUnixNano": "1768474810656983752",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "DynamoDB"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "PutItem"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "localhost"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "9000"
+         }
+        },
+        {
+         "key": "db.system",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "db.operation",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "aws.dynamodb.table_names",
+         "value": {
+          "arrayValue": {
+           "values": [
+            {
+             "stringValue": "acme-outbox-dev"
+            }
+           ]
+          }
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "40151a4703950839",
+       "parentSpanId": "4f56a78a88e20443",
+       "flags": 256,
+       "name": "DynamoDB.UpdateItem",
+       "kind": 3,
+       "startTimeUnixNano": "1768474810657315171",
+       "endTimeUnixNano": "1768474810678443287",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "DynamoDB"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "UpdateItem"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "localhost"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "9000"
+         }
+        },
+        {
+         "key": "db.system",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "db.operation",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "net.peer.name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "aws.dynamodb.table_names",
+         "value": {
+          "arrayValue": {
+           "values": [
+            {
+             "stringValue": "acme-outbox-dev"
+            }
+           ]
+          }
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      }
+     ],
+     "schemaUrl": "https://opentelemetry.io/schemas/1.11.0"
+    },
+    {
+     "scope": {
+      "name": "billing-publisher"
+     },
+     "spans": [
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "5362143956b3198a",
+       "parentSpanId": "88b6c1525824d003",
+       "flags": 256,
+       "name": "billing-publisher.idempotency_check",
+       "kind": 1,
+       "startTimeUnixNano": "1768474809733416774",
+       "endTimeUnixNano": "1768474809761455232",
+       "status": {}
+      },
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "21953483e976110d",
+       "parentSpanId": "88b6c1525824d003",
+       "flags": 256,
+       "name": "billing-publisher.business_logic",
+       "kind": 1,
+       "startTimeUnixNano": "1768474809761530065",
+       "endTimeUnixNano": "1768474810634931797",
+       "attributes": [
+        {
+         "key": "acme.repository.type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.repository.class",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.use_case.name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.use_case.success",
+         "value": {
+          "boolValue": false
+         }
+        },
+        {
+         "key": "acme.use_case.message",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.billing.order_ids",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.billing.order_count",
+         "value": {
+          "intValue": "0"
+         }
+        }
+       ],
+       "events": [
+        {
+         "timeUnixNano": "1768474810547629399",
+         "name": "capture.written",
+         "attributes": [
+          {
+           "key": "acme.environment",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "service.name",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "acme.capture.request_uri",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "acme.capture.response_uri",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "acme.capture.status_code",
+           "value": {
+            "intValue": "0"
+           }
+          }
+         ]
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "4f56a78a88e20443",
+       "parentSpanId": "88b6c1525824d003",
+       "flags": 256,
+       "name": "billing-publisher.outbox_recording",
+       "kind": 1,
+       "startTimeUnixNano": "1768474810635030631",
+       "endTimeUnixNano": "1768474810679206334",
+       "events": [
+        {
+         "timeUnixNano": "1768474810679194959",
+         "name": "failure.recorded",
+         "attributes": [
+          {
+           "key": "acme.environment",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "service.name",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "acme.error_message",
+           "value": {
+            "stringValue": "redacted"
+           }
+          }
+         ]
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "88b6c1525824d003",
+       "parentSpanId": "fe3f572db0c39686",
+       "flags": 768,
+       "name": "billing-publisher.process_work_unit",
+       "kind": 1,
+       "startTimeUnixNano": "1768474809732510683",
+       "endTimeUnixNano": "1768474810680058965",
+       "attributes": [
+        {
+         "key": "acme.work_unit.id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.work_unit.domain",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.work_unit.event_type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.work_unit.source",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.work_unit.correlation_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.work_unit.retry_count",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "acme.work_unit.priority",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.work_unit.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.messaging.message_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.messaging.receipt_handle_present",
+         "value": {
+          "boolValue": false
+         }
+        },
+        {
+         "key": "acme.messaging.receive_count",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "acme.messaging.sent_timestamp",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.lambda.log_group",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.lambda.log_stream",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.lambda.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.processor_name",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.region_policy",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.attempt_region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "acme.success",
+         "value": {
+          "boolValue": false
+         }
+        },
+        {
+         "key": "acme.disposition",
+         "value": {
+          "stringValue": "redacted"
+         }
+        }
+       ],
+       "events": [
+        {
+         "timeUnixNano": "1768474810680035590",
+         "name": "exception",
+         "attributes": [
+          {
+           "key": "exception.type",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "exception.message",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "exception.stacktrace",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "exception.escaped",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "acme.environment",
+           "value": {
+            "stringValue": "redacted"
+           }
+          },
+          {
+           "key": "service.name",
+           "value": {
+            "stringValue": "redacted"
+           }
+          }
+         ]
+        }
+       ],
+       "status": {
+        "code": 2
+       }
+      }
+     ]
+    },
+    {
+     "scope": {
+      "name": "opentelemetry.instrumentation.httpx",
+      "version": "0.66b0"
+     },
+     "spans": [
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "ca4d88ff717e1531",
+       "parentSpanId": "21953483e976110d",
+       "flags": 256,
+       "name": "POST",
+       "kind": 3,
+       "startTimeUnixNano": "1768474809792893465",
+       "endTimeUnixNano": "1768474810519268647",
+       "attributes": [
+        {
+         "key": "http.method",
+         "value": {
+          "stringValue": "POST"
+         }
+        },
+        {
+         "key": "http.url",
+         "value": {
+          "stringValue": "https://billing.partner.example.com/v2/invoices/place"
+         }
+        },
+        {
+         "key": "http.request.header.host",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.accept",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.accept-encoding",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.connection",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.content-type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.user-agent",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.x-service-token",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.cookie",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.request.header.content-length",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "500"
+         }
+        },
+        {
+         "key": "http.response.header.server",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.content-type",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.date",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.cache-control",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.content-length",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-upstream-service-time",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.server-timing",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.header.x-edge-location",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "http.response.body.size",
+         "value": {
+          "intValue": "0"
+         }
+        }
+       ],
+       "status": {
+        "code": 2
+       }
+      }
+     ],
+     "schemaUrl": "https://opentelemetry.io/schemas/1.11.0"
+    },
+    {
+     "scope": {
+      "name": "opentelemetry.instrumentation.botocore",
+      "version": "0.66b0"
+     },
+     "spans": [
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "ffffbed46b6cbe4b",
+       "parentSpanId": "21953483e976110d",
+       "flags": 256,
+       "name": "S3.PutObject",
+       "kind": 3,
+       "startTimeUnixNano": "1768474810556723050",
+       "endTimeUnixNano": "1768474810598480610",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "S3"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "PutObject"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "localhost"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "9000"
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "b82b2f140b18d253",
+       "parentSpanId": "21953483e976110d",
+       "flags": 256,
+       "name": "S3.PutObject",
+       "kind": 3,
+       "startTimeUnixNano": "1768474810578975590",
+       "endTimeUnixNano": "1768474810604039484",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "S3"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "PutObject"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "localhost"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "9000"
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      },
+      {
+       "traceId": "40f648cfb67ba1e4cd4ba625d17c6f8d",
+       "spanId": "71c68ebdfbd24c5f",
+       "parentSpanId": "21953483e976110d",
+       "flags": 256,
+       "name": "S3.PutObject",
+       "kind": 3,
+       "startTimeUnixNano": "1768474810614836648",
+       "endTimeUnixNano": "1768474810633173951",
+       "attributes": [
+        {
+         "key": "rpc.system",
+         "value": {
+          "stringValue": "aws-api"
+         }
+        },
+        {
+         "key": "rpc.service",
+         "value": {
+          "stringValue": "S3"
+         }
+        },
+        {
+         "key": "rpc.method",
+         "value": {
+          "stringValue": "PutObject"
+         }
+        },
+        {
+         "key": "cloud.region",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "server.address",
+         "value": {
+          "stringValue": "localhost"
+         }
+        },
+        {
+         "key": "server.port",
+         "value": {
+          "intValue": "9000"
+         }
+        },
+        {
+         "key": "aws.request_id",
+         "value": {
+          "stringValue": "redacted"
+         }
+        },
+        {
+         "key": "retry_attempts",
+         "value": {
+          "intValue": "0"
+         }
+        },
+        {
+         "key": "http.status_code",
+         "value": {
+          "intValue": "200"
+         }
+        }
+       ],
+       "status": {}
+      }
+     ],
+     "schemaUrl": "https://opentelemetry.io/schemas/1.11.0"
+    }
+   ]
+  }
+ ]
+}
