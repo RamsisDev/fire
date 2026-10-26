@@ -1,8 +1,8 @@
-![FIRE ENGINE — Failure Investigation & Root Explanation](assets/cover.jpg)
+![FIRE ENGINE: Failure Investigation & Root Explanation](assets/cover.jpg)
 
 AI-assisted incident response that reasons over **payload shape** (never raw field
-values) and the **process path** a request walked — which services, spans, and
-changes it hit — then ranks **why it may have failed**, and posts a readable Slack message.
+values) and the **process path** a request walked (which services, spans, and
+changes it hit), then ranks **why it may have failed**, and posts a readable Slack message.
 
 Existing IR tools are weak at connecting what the payload *looked like* with which path
 through the system it took. FIRE ENGINE is built for that gap.
@@ -15,13 +15,13 @@ trigger is a generic port that the YAML configures.
 
 Hexagonal, with a strict dependency rule:
 
-- `fire/core/` — domain, ports, and services. **Zero knowledge of concrete
+- `fire/core/`: Domain, ports, and services. **Zero knowledge of concrete
   watched systems and zero infra deps** (only `pydantic` and the standard library).
-- `fire/adapters/` — concrete port implementations (sources, manifests, shapes,
+- `fire/adapters/`: Concrete port implementations (sources, manifests, shapes,
   catalogs, reasoners, narrators, notifiers, webhooks). Imports `core`.
-- `fire/apps/` — runnable apps: the incident engine (the *body*) and the tentacle.
+- `fire/apps/`: Runnable apps: the incident engine (the *body*) and the tentacle.
   Imports both.
-- `config/systems/` — one YAML per watched system; all per-system variability
+- `config/systems/`: One YAML per watched system; all per-system variability
   lives here, never in code. It declares decisions (Slack channel id, manifest
   location, sources, policy exceptions, triggers); what the system contains is discovered
   from its manifest, never listed by hand. The repo ships only `_template.yml`.
@@ -55,13 +55,13 @@ webhooks), correlates them into incidents, and diagnoses each one.
 Alert / ingest returns **202 at T=0**; diagnosis runs in background. Target: calibrated
 possibilities in under 30 seconds.
 
-1. **Correlate** — collapse a system's triggers inside a window into one incident.
-2. **Assemble dossier** — shape drift, process path, change timeline, dependency health,
+1. **Correlate**: Collapse a system's triggers inside a window into one incident.
+2. **Assemble dossier**: Shape drift, process path, change timeline, dependency health,
    visibility gaps, runbooks. Collectors fan out concurrently with per-tier budgets;
    missing evidence is declared `MISSING`, never invented.
-3. **Reason** — System One over the dossier → calibrated possibility distribution.
-4. **Narrate** — the Narrator turns the decision into Slack prose.
-5. **Notify** — console locally; Slack when configured.
+3. **Reason**: System One over the dossier → calibrated possibility distribution.
+4. **Narrate**: The Narrator turns the decision into Slack prose.
+5. **Notify**: Console locally; Slack when configured.
 
 | Tier | Meaning | Default budget |
 |------|---------|----------------|
